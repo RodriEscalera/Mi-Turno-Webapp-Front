@@ -40,7 +40,6 @@ const BookingPanel = () => {
   };
 
   const handleOnChangeForm = (form: FormData) => {
-    console.log(form);
     setSelectedForm(form);
     if (
       form.name === "" ||
@@ -61,7 +60,7 @@ const BookingPanel = () => {
         .post("http://localhost:3001/api/booking/createBooking", {
           branch: selectedBranch,
           date: selectedDate,
-          time: selectedForm,
+          time: {selectedForm},
         })
         .then((res) => res.data);
       console.log(data);
