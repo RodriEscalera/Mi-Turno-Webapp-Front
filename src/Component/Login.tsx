@@ -21,6 +21,8 @@ function Login() {
   const [showModal, setShowModal] = useState(0);
   const [isOpenErr, setIsOpenErr] = useState(false);
   const [buttonIsAble, setButtonIsAble] = useState(false);
+  const [isEmail, setIsEmail] = useState(0);
+  const [isPassword, setIsPassword] = useState(0);
 
   const navigate = useNavigate();
   const { formulario, handleChange } = useInput<FormData>({
@@ -30,7 +32,17 @@ function Login() {
 
   const { email, password } = formulario;
 
-  
+  /* const validFields = () => {
+      const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/; 
+
+    if ( emailRegex.test(email) && passwordRegex.test(password)) {
+      setButtonIsAble(true);
+    } else {
+      setButtonIsAble(false);
+    } 
+  }; 
+  */
   useEffect(() => {
     const hasEmail = (value: string) => {
       return /^[a-zA-Z0-9.!#$%&’+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/.exec(
@@ -42,11 +54,16 @@ function Login() {
     };
 
     if (hasEmail(email) && enoughLength(password)) {
-      setButtonIsAble(true);
+      setIsEmail(1);
+      setIsPassword(1);
+      setButtonIsAble(true)
     } else {
-      setButtonIsAble(false);
+      setIsEmail(0);
+      setIsPassword(0);
+      setButtonIsAble(false)
     }
   }, [email, password]);
+
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
@@ -85,6 +102,7 @@ function Login() {
       navigate("/bookingPanel");
     });
   };
+
 
   return (
     <>
@@ -165,22 +183,13 @@ function Login() {
 
             <div>
               <Link to="/bookingPanel">
-                {buttonIsAble ? (
-                  <button
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 "
-                  >
-                    Ingresar
-                  </button>
-                ) : (
-                  <button
-                    disabled
-                    className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-grey6 text-base font-semibold transition duration-500 ease-in-out transform bg-grey3 rounded-xl mb-5 "
-                  >
-                    Ingresar
-                  </button>
-                )}
+                <button
+                  onClick={handleSubmit}
+                  type="submit"
+                  className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 "
+                >
+                  Ingresar
+                </button>
               </Link>
               <hr className="border-1 border-gray-300 " />
             </div>
