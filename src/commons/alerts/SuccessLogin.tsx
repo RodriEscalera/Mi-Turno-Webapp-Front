@@ -24,7 +24,7 @@ const SuccessLogin = () => {
               />
             </svg>
             <h2 className="text-lg font-semibold pt-4 pb-1 font-roboto ">
-              Inciaste sesion correctamente
+              Iniciaste sesion correctamente
             </h2>
           </div>
 
