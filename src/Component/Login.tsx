@@ -9,7 +9,6 @@ import ojitoActivo from "../assets/icons/openEye2.svg";
 import { Link } from "react-router-dom";
 import UnsuccessLogin from "../commons/alerts/UnsuccessLogin";
 import SuccessLogin from "../commons/alerts/SuccessLogin";
-import { validate } from "json-schema";
 
 interface FormData {
   email: string;
@@ -31,17 +30,7 @@ function Login() {
 
   const { email, password } = formulario;
 
-  /* const validFields = () => {
-      const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/; 
-
-    if ( emailRegex.test(email) && passwordRegex.test(password)) {
-      setButtonIsAble(true);
-    } else {
-      setButtonIsAble(false);
-    } 
-  }; 
-  */
+  
   useEffect(() => {
     const hasEmail = (value: string) => {
       return /^[a-zA-Z0-9.!#$%&’+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/.exec(
