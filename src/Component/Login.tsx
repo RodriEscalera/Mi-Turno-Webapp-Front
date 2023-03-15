@@ -22,7 +22,6 @@ function Login() {
   const [showModal, setShowModal] = useState(0);
   const [isOpenErr, setIsOpenErr] = useState(false);
   const [buttonIsAble, setButtonIsAble] = useState(false);
-  
 
   const navigate = useNavigate();
   const { formulario, handleChange } = useInput<FormData>({
@@ -54,14 +53,11 @@ function Login() {
     };
 
     if (hasEmail(email) && enoughLength(password)) {
-      
-      setButtonIsAble(true)
+      setButtonIsAble(true);
     } else {
-     
-      setButtonIsAble(false)
+      setButtonIsAble(false);
     }
   }, [email, password]);
-
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
@@ -100,7 +96,6 @@ function Login() {
       navigate("/bookingPanel");
     });
   };
-
 
   return (
     <>
@@ -183,10 +178,9 @@ function Login() {
               <Link to="/bookingPanel">
                 {buttonIsAble ? (
                   <button
-                    onClick={handleSubmit} 
+                    onClick={handleSubmit}
                     type="submit"
                     className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 "
-                    
                   >
                     Ingresar
                   </button>
