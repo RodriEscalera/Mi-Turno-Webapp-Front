@@ -22,8 +22,7 @@ function Login() {
   const [showModal, setShowModal] = useState(0);
   const [isOpenErr, setIsOpenErr] = useState(false);
   const [buttonIsAble, setButtonIsAble] = useState(false);
-  const [isEmail, setIsEmail] = useState(0);
-  const [isPassword, setIsPassword] = useState(0);
+  
 
   const navigate = useNavigate();
   const { formulario, handleChange } = useInput<FormData>({
@@ -55,12 +54,10 @@ function Login() {
     };
 
     if (hasEmail(email) && enoughLength(password)) {
-      setIsEmail(1);
-      setIsPassword(1);
+      
       setButtonIsAble(true)
     } else {
-      setIsEmail(0);
-      setIsPassword(0);
+     
       setButtonIsAble(false)
     }
   }, [email, password]);
