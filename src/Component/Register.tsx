@@ -8,6 +8,7 @@ import check from "../assets/icons/rightCheckbox.svg";
 import wrong from "../assets/icons/wrongCheckbox.svg";
 import SuccessRegister from "../commons/alerts/SuccessRegister";
 import UnsuccessRegister from "../commons/alerts/UnsuccessRegister";
+import { Alert, message, Space } from "antd";
 
 interface FormData {
   name: string;
@@ -27,6 +28,8 @@ const Register = () => {
   const [length, setLength] = useState(0);
   const [showModal, setShowModal] = useState(0);
   const [isOpenErr, setIsOpenErr] = useState(false);
+  const [isMatchPassword, setIsMatchPassword] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const navigate = useNavigate();
 
@@ -39,7 +42,14 @@ const Register = () => {
     usertype: "",
   });
 
-  const { name, dni, email, password } = formulario;
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content: "No coinciden las contraseñas",
+    });
+  };
+
+  const { name, dni, email, password, password2 } = formulario;
 
   useEffect(() => {
     const hasUppercase = (value: string) => {
@@ -123,9 +133,19 @@ const Register = () => {
   };
 
   // console.log(haveUp);
+  const validatePassword2 = () => {
+    if (password !== password2) {
+      setIsMatchPassword(false);
+      error();
+    } else {
+      setIsMatchPassword(true);
+    }
+  };
 
   return (
     <>
+      {contextHolder}
+
       <section className="h-screen">
         <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-2xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
           <div className="w-full">
@@ -279,7 +299,10 @@ const Register = () => {
                     onChange={handleChange}
                     type={showPwdRepeat ? "text" : "password"}
                     required
-                    className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
+                    className={` border ${
+                      isMatchPassword ? "border-gray-300" : "border-red-500"
+                    } block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 `}
+                    onBlur={validatePassword2}
                   />
                 </div>
               </div>

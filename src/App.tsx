@@ -5,19 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./store/user";
 import axios from "axios";
 import Login from "./Component/Login";
-import Counter from "./commons/Counter";
 import Register from "./Component/Register";
 import Home from "./Component/Home";
 import CreateBranch from "./Component/CreateBranch";
 import BookingPanel from "./Component/BookingPanel";
 import NewOperator from "./Component/NewOperator";
 import MyAccount from "./Component/MyAccount";
-
 import Branches from "./Component/Branches";
 import MyBookings from "./Component/MyBookings";
 import Operators from "./Component/Operators";
 import ChangePassword from "./Component/ChangePassword";
 import ForgotPassword from "./Component/ForgotPassword";
+import Booking from "./Component/Booking";
 
 function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -48,6 +47,7 @@ function App(): JSX.Element {
         <Route path="/newOperator" element={<NewOperator />} />
         <Route path="/changePassword/*" element={<ChangePassword />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/booking" element={<Booking />} />
 
         {user.usertype === "admin" && (
           <>
