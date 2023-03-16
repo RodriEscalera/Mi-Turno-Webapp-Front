@@ -14,6 +14,8 @@ import MyAccount from "./Component/MyAccount";
 import Branches from "./Component/Branches";
 import MyBookings from "./Component/MyBookings";
 import Operators from "./Component/Operators";
+import ChangePassword from "./Component/ChangePassword";
+import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
 
 function App(): JSX.Element {
@@ -43,6 +45,8 @@ function App(): JSX.Element {
         <Route path="/bookingPanel" element={<BookingPanel />} />
         <Route path="/operators" element={<Operators />} />
         <Route path="/newOperator" element={<NewOperator />} />
+        <Route path="/changePassword/*" element={<ChangePassword />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/booking" element={<Booking />} />
 
         {user.usertype === "admin" && (
