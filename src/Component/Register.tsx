@@ -122,8 +122,6 @@ const Register = () => {
     });
   };
 
-  // console.log(haveUp);
-
   return (
     <>
       <section className="h-screen">
