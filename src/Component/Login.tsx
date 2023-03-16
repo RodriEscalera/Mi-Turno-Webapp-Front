@@ -36,11 +36,11 @@ function Login() {
         value
       );
     };
-    const passwordLength = (value: string) => {
-      return value.length >= 8;
+    const hasPassword = (value: string) => {
+      return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.exec(value);
     };
 
-    if (hasEmail(email) && passwordLength(password)) {
+    if (hasEmail(email) && hasPassword(password)) {
       setButtonIsAble(true)
     } else {
       setButtonIsAble(false)
