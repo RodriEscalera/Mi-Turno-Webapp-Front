@@ -13,8 +13,6 @@ import { FormData } from "../commons/FormReservation";
 
 interface Branch {
   id: number;
-  nombre: string;
-  direccion: string;
 }
 
 const BookingPanel = () => {
@@ -23,7 +21,7 @@ const BookingPanel = () => {
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedForm, setSelectedForm] = useState<FormData>({
-    name: "",
+    fullName: "",
     phone: "",
     email: "",
     time: "",
@@ -42,7 +40,7 @@ const BookingPanel = () => {
   const handleOnChangeForm = (form: FormData) => {
     setSelectedForm(form);
     if (
-      form.name === "" ||
+      form.fullName === "" ||
       form.phone === "" ||
       form.email === "" ||
       form.time === ""
@@ -60,7 +58,7 @@ const BookingPanel = () => {
         .post("http://localhost:3001/api/booking/createBooking", {
           branch: selectedBranch,
           date: selectedDate,
-          time: {selectedForm},
+          form: selectedForm,
         })
         .then((res) => res.data);
       console.log(data);
