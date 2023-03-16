@@ -17,6 +17,7 @@ import Branches from "./Component/Branches";
 import MyBookings from "./Component/MyBookings";
 import Operators from "./Component/Operators";
 import ChangePassword from "./Component/ChangePassword";
+import ForgotPassword from "./Component/ForgotPassword";
 
 function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App(): JSX.Element {
         <Route path="/operators" element={<Operators />} />
         <Route path="/newOperator" element={<NewOperator />} />
         <Route path="/changePassword/*" element={<ChangePassword />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
 
         {user.usertype === "admin" && (
           <>
