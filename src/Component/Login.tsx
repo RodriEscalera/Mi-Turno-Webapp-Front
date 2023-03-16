@@ -1,6 +1,6 @@
 import { useInput } from "../Hooks/useInput";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/user";
@@ -20,7 +20,8 @@ function Login() {
   const [showPwd, setShowPwd] = useState(false);
   const [showModal, setShowModal] = useState(0);
   const [isOpenErr, setIsOpenErr] = useState(false);
-
+  const [buttonIsAble, setButtonIsAble] = useState(false);
+  
   const navigate = useNavigate();
   const { formulario, handleChange } = useInput<FormData>({
     email: "",
@@ -28,6 +29,24 @@ function Login() {
   });
 
   const { email, password } = formulario;
+
+  useEffect(() => {
+    const hasEmail = (value: string) => {
+      return /^[a-zA-Z0-9.!#$%&’+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/.exec(
+        value
+      );
+    };
+    const hasPassword = (value: string) => {
+      return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.exec(value);
+    };
+
+    if (hasEmail(email) && hasPassword(password)) {
+      setButtonIsAble(true)
+    } else {
+      setButtonIsAble(false)
+    }
+  }, [email, password]);
+
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
@@ -66,6 +85,7 @@ function Login() {
       navigate("/bookingPanel");
     });
   };
+
 
   return (
     <>
@@ -146,13 +166,19 @@ function Login() {
 
             <div>
               <Link to="/bookingPanel">
-                <button
+                {buttonIsAble ?
+                  <button
                   onClick={handleSubmit}
                   type="submit"
                   className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 "
                 >
                   Ingresar
-                </button>
+                </button> : 
+                <button
+                className="flex items-center justify-center w-full px-10 py-4 bg-grey3 text-grey6 text-base font-semibold rounded-xl"
+              disabled>
+                Ingresar
+              </button>}
               </Link>
               <hr className="border-1 border-gray-300 " />
             </div>
