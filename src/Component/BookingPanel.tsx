@@ -10,12 +10,15 @@ import FormReservation from "../commons/FormReservation";
 import axios from "axios";
 import Counter from "../commons/Counter";
 import { FormData } from "../commons/FormReservation";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Branch {
   id: number;
 }
 
 const BookingPanel = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
@@ -26,6 +29,23 @@ const BookingPanel = () => {
     email: "",
     time: "",
   });
+
+  const bookingData = useSelector((state: any) => state.data);
+
+
+  useEffect(() => {
+    dispatch(setBookingData({ field: "branch", data: selectedBranch }));
+    dispatch(
+      setBookingData({ field: "date", data: selectedDate?.toISOString() })
+    );
+    dispatch(setBookingData({ field: "time", data: selectedForm.time }));
+    dispatch(
+      setBookingData({ field: "fullName", data: selectedForm.fullName })
+    );
+    dispatch(setBookingData({ field: "phone", data: selectedForm.phone }));
+    dispatch(setBookingData({ field: "email", data: selectedForm.email }));
+    dispatch(setBookingData({ field: "available", data: null }));
+  }, [selectedBranch, selectedDate, selectedForm, dispatch]);
 
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
@@ -56,14 +76,16 @@ const BookingPanel = () => {
     try {
       const { data } = await axios
         .post("http://localhost:3001/api/booking/createBooking", {
-          branch: selectedBranch,
-          date: selectedDate,
-          form: selectedForm,
+          branch: bookingData.branch,
+          date: bookingData.date,
+          time: bookingData.time,
+          fullName: bookingData.fullName,
+          phone: bookingData.phone,
+          email: bookingData.email,
+          available: bookingData.available,
         })
         .then((res) => res.data);
-      console.log(data);
-
-      dispatch(setBookingData(data));
+      dispatch(setBookingData({ field: "available", data: data }));
     } catch (error) {
       console.error(error);
     }
@@ -159,9 +181,12 @@ const BookingPanel = () => {
                 selectedDate &&
                 selectedForm &&
                 currentStep >= 4 ? (
+                  <Link to="/myBookings">
+                  
                   <div className="flex justify-start mt-6">
                     <Button enable={true} />
                   </div>
+                  </Link>
                 ) : (
                   <div className="flex justify-start mt-6">
                     <Button enable={false} />
