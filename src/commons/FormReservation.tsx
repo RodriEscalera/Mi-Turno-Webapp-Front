@@ -5,7 +5,7 @@ interface FormProps {
 }
 
 export interface FormData {
-  name: string;
+  fullName: string;
   phone: string;
   email: string;
   time: string;
@@ -13,7 +13,7 @@ export interface FormData {
 
 const FormReservation = ({ onReservationForm }: FormProps) => {
   const [form, setForm] = useState<FormData>({
-    name: "",
+    fullName: "",
     phone: "",
     email: "",
     time: "",
@@ -67,9 +67,9 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
             Nombre y Apellido
           </label>
           <input
-            name="name"
+            name="fullName"
             type="text"
-            id="name"
+            id="fullName"
             className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
             onChange={handleChange}
             required
