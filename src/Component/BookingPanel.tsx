@@ -11,7 +11,6 @@ import axios from "axios";
 import Counter from "../commons/Counter";
 import { FormData } from "../commons/FormReservation";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 interface Branch {
   id: number;
@@ -22,6 +21,8 @@ const BookingPanel = () => {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+  console.log(selectedBranch);
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedForm, setSelectedForm] = useState<FormData>({
     fullName: "",
@@ -31,7 +32,6 @@ const BookingPanel = () => {
   });
 
   const bookingData = useSelector((state: any) => state.data);
-
 
   useEffect(() => {
     dispatch(setBookingData({ field: "branch", data: selectedBranch }));
@@ -70,13 +70,14 @@ const BookingPanel = () => {
       setCurrentStep(4);
     }
   };
-
+  const user = useSelector((state: any) => state.user);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const { data } = await axios
         .post("http://localhost:3001/api/booking/createBooking", {
           branch: bookingData.branch,
+          user: user.id,
           date: bookingData.date,
           time: bookingData.time,
           fullName: bookingData.fullName,
@@ -84,8 +85,10 @@ const BookingPanel = () => {
           email: bookingData.email,
           available: bookingData.available,
         })
-        .then((res) => res.data);
-      dispatch(setBookingData({ field: "available", data: data }));
+        
+          dispatch(setBookingData({ field: "available", data: data }));
+          navigate("/booking");
+      
     } catch (error) {
       console.error(error);
     }
@@ -181,12 +184,9 @@ const BookingPanel = () => {
                 selectedDate &&
                 selectedForm &&
                 currentStep >= 4 ? (
-                  <Link to="/myBookings">
-                  
                   <div className="flex justify-start mt-6">
                     <Button enable={true} />
                   </div>
-                  </Link>
                 ) : (
                   <div className="flex justify-start mt-6">
                     <Button enable={false} />
