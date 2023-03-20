@@ -25,14 +25,11 @@ const MyAccount = () => {
     setPhone(user.phone);
   }, [user]);
 
-  console.log({ fullName, email, dni, phone });
-
   const handleEdit = (e: buttonEvent) => {
     e.preventDefault();
 
     setIsDisabled(!isDisabled);
   };
-  console.log(isDisabled);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
