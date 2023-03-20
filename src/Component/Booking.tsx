@@ -1,7 +1,25 @@
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import cruz from "../assets/icons/cruzRoja.svg";
 import llave from "../assets/icons/llaveInglesa.svg";
 
 const Booking = () => {
+  const [lastBooking, setLastBooking] = useState<any>([]);
+  const user = useSelector((state: any) => state.user);
+
+  useEffect(() => {
+    getBooking();
+  }, [user]);
+
+  const getBooking = async () => {
+    const { data } = await axios.get<any, any>(
+      `http://localhost:3001/api/booking//getLastBooking/${user.id}`
+    );
+    setLastBooking(data);
+  };
+  console.log(lastBooking);
+
   return (
     <div className="mt-14 mx-24 px-8 h-screen">
       <div className="">
@@ -24,9 +42,10 @@ const Booking = () => {
           ¡Gracias por tu reserva!
         </p>
         <p className="text-center mt-6 text-sm font-roboto px-24">
-          En hasta 5 minutos, recibirás un correo electrónico en
-          ivan@e-cruce.com con todos los detalles de tu reservación. Recordá
-          revisar tu buzón de correo no deseado o promociones.
+          En hasta 5 minutos, recibirás un correo electrónico en{" "}
+          <span>{lastBooking.email}</span> con todos los detalles de tu
+          reservación. Recordá revisar tu buzón de correo no deseado o
+          promociones.
         </p>
         <button className="flex items-center justify-center max-w-sm px-10 py-3 m-auto mt-6 mb-10 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 ">
           ¿Quéres imprimir tu comprobante?
@@ -36,28 +55,33 @@ const Booking = () => {
       <div className="flex flex-row mt-6">
         <div className="mr-1 w-4/5">
           <p className="text-[1.625rem] font-roboto font-bold">
-            Reserva <span className="text-violet">#1043812955480-01</span>
+            Reserva <span className="text-violet">#{lastBooking._id}</span>
           </p>
           <p className="text-sm font-roboto font-semibold mt-2">
-            Hecho el 10/10/2022 a las 11:35 hs para el 12/10/2022 a las 13:00 hs
+            Hecho el {lastBooking.createdAt} hs para el {lastBooking.date} a las{" "}
+            {lastBooking.time} hs.
           </p>
           <div className="grid grid-cols-2 mt-20 text-sm font-roboto font-normal">
             <div className="">
-              <p className="mb-2 text-base font-bold">Ivan Cruce</p>
+              <p className="mb-2 text-base font-bold">{lastBooking.fullName}</p>
               <p className=" mb-1 text-grey8">
-                <span className="font-semibold ">Mail:</span> ivan@e-cruce.com
+                <span className="font-semibold ">Mail:</span>{" "}
+                {lastBooking.email}
               </p>
               <p className="text-grey8">
-                <span className="font-semibold">Teléfono:</span> 1123456789
+                <span className="font-semibold">Teléfono:</span>{" "}
+                {lastBooking.phone}
               </p>
             </div>
             <div>
               <p className="mb-2 text-base font-bold">Reserva</p>
               <p className="mb-1 text-grey8">
-                <span className="font-semibold">Sucursal:</span> Villa Crespo
+                <span className="font-semibold">Sucursal:</span>{" "}
+                {lastBooking.branch.name}
               </p>
               <p className="text-grey8">
-                <span className="font-semibold">Horario:</span> 13:00 hs
+                <span className="font-semibold">Horario:</span>{" "}
+                {lastBooking.time} hs
               </p>
             </div>
           </div>

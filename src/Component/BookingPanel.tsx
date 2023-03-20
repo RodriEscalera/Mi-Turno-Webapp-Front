@@ -36,7 +36,10 @@ const BookingPanel = () => {
   useEffect(() => {
     dispatch(setBookingData({ field: "branch", data: selectedBranch }));
     dispatch(
-      setBookingData({ field: "date", data: selectedDate?.toISOString() })
+      setBookingData({
+        field: "date",
+        data: selectedDate?.toLocaleDateString(),
+      })
     );
     dispatch(setBookingData({ field: "time", data: selectedForm.time }));
     dispatch(
@@ -74,8 +77,9 @@ const BookingPanel = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { data } = await axios
-        .post("http://localhost:3001/api/booking/createBooking", {
+      const { data } = await axios.post(
+        "http://localhost:3001/api/booking/createBooking",
+        {
           branch: bookingData.branch,
           user: user.id,
           date: bookingData.date,
@@ -84,11 +88,11 @@ const BookingPanel = () => {
           phone: bookingData.phone,
           email: bookingData.email,
           available: bookingData.available,
-        })
-        
-          dispatch(setBookingData({ field: "available", data: data }));
-          navigate("/booking");
-      
+        }
+      );
+
+      dispatch(setBookingData({ field: "available", data: data }));
+      navigate("/booking");
     } catch (error) {
       console.error(error);
     }
