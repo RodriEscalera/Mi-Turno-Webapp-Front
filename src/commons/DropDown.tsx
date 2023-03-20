@@ -34,6 +34,9 @@ const Dropdown = (props: DropDownProps) => {
     //dispatch(setBookingData({field:"branch", data:target.value}))
   };
 
+
+  
+
   return (
     <div className="relative w-full">
       <select
@@ -45,7 +48,7 @@ const Dropdown = (props: DropDownProps) => {
         {array.length === 0
           ? null
           : array?.map((option: any, i) => (
-              <option key={i} value={option.name}>
+              <option key={i} value={option._id}>
                 {option.name}
               </option>
             ))}
