@@ -111,14 +111,6 @@ const UpdateBooking = () => {
                     <div className="flex w-full flex-col mt-5 font-roboto text-sm">
                       <FormReservation onReservationForm={handleUserChange} />
                     </div>
-                    <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
-                      <div className="flex flex-col items-center">
-                        <label htmlFor="calendar">
-                          Selecciona un nuevo día
-                        </label>
-                        <Calendar onChange={handleDateChange} value={date} />
-                      </div>
-                    </div>
                   </>
 
                   <div className="flex justify-start mt-6">
@@ -128,6 +120,14 @@ const UpdateBooking = () => {
                   </div>
                 </div>
               </div>
+                    <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
+                      <div className="flex flex-col items-center">
+                        <label htmlFor="calendar">
+                          Selecciona un nuevo día
+                        </label>
+                        <Calendar onChange={handleDateChange} value={date}  className="border-none" />
+                      </div>
+                    </div>
             </div>
           </section>
         </form>
