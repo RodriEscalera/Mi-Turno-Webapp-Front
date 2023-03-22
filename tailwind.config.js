@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        homeImage: "url('https://im.ge/i/Dwe9Ey')",
+      },
       colors: {
         violet: "#A442F1",
         violetHover: "#CC6AFF",
