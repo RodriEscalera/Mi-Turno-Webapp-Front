@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import cruz from "../assets/icons/cruzRoja.svg";
@@ -18,7 +19,6 @@ const Booking = () => {
     );
     setLastBooking(data);
   };
-  console.log(lastBooking);
 
   return (
     <div className="mt-14 mx-24 px-8 h-screen">
@@ -65,22 +65,22 @@ const Booking = () => {
             <div className="">
               <p className="mb-2 text-base font-bold">{lastBooking.fullName}</p>
               <p className=" mb-1 text-grey8">
-                <span className="font-semibold ">Mail:</span>{" "}
+                <span className="font-semibold ">Mail: </span>
                 {lastBooking.email}
               </p>
               <p className="text-grey8">
-                <span className="font-semibold">Teléfono:</span>{" "}
+                <span className="font-semibold">Teléfono: </span>
                 {lastBooking.phone}
               </p>
             </div>
             <div>
               <p className="mb-2 text-base font-bold">Reserva</p>
               <p className="mb-1 text-grey8">
-                <span className="font-semibold">Sucursal:</span>{" "}
-                {lastBooking.branch.name}
+                <span className="font-semibold">Sucursal: </span>
+                {lastBooking.branch ? lastBooking.branch.name : ""}
               </p>
               <p className="text-grey8">
-                <span className="font-semibold">Horario:</span>{" "}
+                <span className="font-semibold">Horario: </span>
                 {lastBooking.time} hs
               </p>
             </div>
