@@ -11,6 +11,7 @@ import axios from "axios";
 import Counter from "../commons/Counter";
 import { FormData } from "../commons/FormReservation";
 import { useNavigate } from "react-router-dom";
+import ModalCheck from "../commons/alerts/ModalCheck";
 
 interface Branch {
   id: number;
@@ -19,6 +20,7 @@ interface Branch {
 const BookingPanel = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -90,8 +92,9 @@ const BookingPanel = () => {
       );
 
       dispatch(setBookingData({ field: "available", data: data }));
-      navigate("/booking");
+      setShowModal(1);
     } catch (error) {
+      setShowModal(2);
       console.error(error);
     }
   };
@@ -214,6 +217,7 @@ const BookingPanel = () => {
           </div>
         </section>
       </form>
+      {showModal === 1 ? <ModalCheck /> : null}
       <div className="opacity-50 bg-violetHover shadow-timer fixed bottom-0 right-0 rounded-lg text-white text-base font-roboto m-1 p-1 md:m-8 md:p-2 md:opacity-100">
         <Counter />
       </div>
