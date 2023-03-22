@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-
 function MyBookings() {
   const [booking, setBooking] = useState<any>([]);
 
@@ -11,7 +10,6 @@ function MyBookings() {
   useEffect(() => {
     getBooking();
   }, [user]);
-
 
   const getBooking = async () => {
     const { data } = await axios.get<any, any>(
@@ -62,7 +60,7 @@ function MyBookings() {
                           N° de la reserva
                         </h2>
                         <p className="text-sm font-roboto font-semibold leading-4">
-                          {turno._id.slice(0,6)}...
+                          {turno._id.slice(0, 6)}...
                         </p>
                       </div>
                     </div>
@@ -81,9 +79,9 @@ function MyBookings() {
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            stroke-linecap="round"
+                            /* stroke-linecap="round"
                             stroke-linejoin="round"
-                            stroke-width="2"
+                            stroke-width="2" */
                             d="M19 9l-7 7-7-7"
                           ></path>
                         </svg>

@@ -17,6 +17,7 @@ import Operators from "./Component/Operators";
 import ChangePassword from "./Component/ChangePassword";
 import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
+import UpdateBooking from "./Component/UpdateBooking";
 
 function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App(): JSX.Element {
         <Route path="/changePassword/*" element={<ChangePassword />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/booking" element={<Booking />} />
+         <Route path="/updateBooking" element={<UpdateBooking />} /> 
 
         {user.usertype === "admin" && (
           <>

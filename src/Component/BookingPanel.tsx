@@ -21,8 +21,6 @@ const BookingPanel = () => {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
-  console.log(selectedBranch);
-
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedForm, setSelectedForm] = useState<FormData>({
     fullName: "",
