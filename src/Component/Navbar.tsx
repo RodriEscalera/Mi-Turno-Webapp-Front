@@ -46,32 +46,50 @@ export const Navbar = () => {
             id="navbar-solid-bg"
           >
             <ul className="flex flex-col mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent">
-              <li className="bg-white sm:py-2">
-                <Link
-                  to="/myBookings"
-                  className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
-                >
-                  Mis Reservas
-                  <img
-                    className="pl-1 hover:text-cruceHover"
-                    src={misReservas}
-                    alt=""
-                  />
-                </Link>
-              </li>
-              <li className="bg-white sm:py-2">
-                <Link
-                  to="/myAccount"
-                  className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
-                >
-                  Mi Cuenta
-                  <img
-                    className="pl-1 hover:text-cruceHover"
-                    src={miCuenta}
-                    alt=""
-                  />
-                </Link>
-              </li>
+              {user.id ? (
+                <>
+                  <li className="bg-white sm:py-2">
+                    <Link
+                      to="/myBookings"
+                      className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                    >
+                      Mis Reservas
+                      <img
+                        className="pl-1 hover:text-cruceHover"
+                        src={misReservas}
+                        alt=""
+                      />
+                    </Link>
+                  </li>
+                  <li className="bg-white sm:py-2">
+                    <Link
+                      to="/myAccount"
+                      className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                    >
+                      Mi Cuenta
+                      <img
+                        className="pl-1 hover:text-cruceHover"
+                        src={miCuenta}
+                        alt=""
+                      />
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li className="bg-white sm:py-2">
+                  <Link
+                    to="/login"
+                    className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                  >
+                    Iniciar sesión
+                    <img
+                      className="pl-1 hover:text-cruceHover"
+                      src={miCuenta}
+                      alt=""
+                    />
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
