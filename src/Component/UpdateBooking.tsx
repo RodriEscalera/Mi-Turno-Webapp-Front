@@ -131,7 +131,7 @@ const UpdateBooking = () => {
             </div>
           </section>
         </form>
-      </>
+     </>
     </div>
   );
 };
