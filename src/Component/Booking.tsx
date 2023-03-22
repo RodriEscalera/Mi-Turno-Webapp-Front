@@ -77,7 +77,7 @@ const Booking = () => {
               <p className="mb-2 text-base font-bold">Reserva</p>
               <p className="mb-1 text-grey8">
                 <span className="font-semibold">Sucursal:</span>{" "}
-                {lastBooking.branch.name}
+                {lastBooking.branch ? lastBooking.branch.name : ""}
               </p>
               <p className="text-grey8">
                 <span className="font-semibold">Horario:</span>{" "}

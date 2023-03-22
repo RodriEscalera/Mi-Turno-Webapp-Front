@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-
 function MyBookings() {
   const [booking, setBooking] = useState<any>([]);
 
@@ -12,11 +11,11 @@ function MyBookings() {
     getBooking();
   }, [user]);
 
-
   const getBooking = async () => {
     const { data } = await axios.get<any, any>(
       `http://localhost:3001/api/booking/getBookingOfUser/${user.id}`
     );
+    console.log(data);
     setBooking(data);
   };
 
@@ -29,8 +28,8 @@ function MyBookings() {
         <div className="lg:flex lg:flex-wrap">
           {booking.length === 0
             ? null
-            : booking.map((turno: any) => (
-                <div className=" p-2 lg:w-full md:w-1/2">
+            : booking.map((turno: any, key: string) => (
+                <div key={key} className=" p-2 lg:w-full md:w-1/2">
                   <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
                     <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
                       <div>
@@ -54,7 +53,7 @@ function MyBookings() {
                           Sucursal
                         </h2>
                         <p className="text-sm font-roboto font-semibold leading-4">
-                          {turno.branch.name}
+                          {turno.branch ? turno.branch.name : ""}
                         </p>
                       </div>
                       <div>
@@ -62,7 +61,7 @@ function MyBookings() {
                           N° de la reserva
                         </h2>
                         <p className="text-sm font-roboto font-semibold leading-4">
-                          {turno._id.slice(0,6)}...
+                          {turno._id.slice(0, 6)}...
                         </p>
                       </div>
                     </div>
@@ -81,9 +80,9 @@ function MyBookings() {
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
                             d="M19 9l-7 7-7-7"
                           ></path>
                         </svg>
