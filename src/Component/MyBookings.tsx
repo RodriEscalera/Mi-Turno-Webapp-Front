@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 import download from "../assets/icons/download.svg";
 import bin from "../assets/icons/delete.svg";
 
@@ -62,6 +63,7 @@ function MyBookings() {
                           N° de la reserva
                         </h2>
                         <p className="text-sm font-roboto font-semibold leading-4">
+
                           {turno._id.slice(0, 12)}...
                         </p>
                       </div>
@@ -69,6 +71,7 @@ function MyBookings() {
                     <div className="flex space-x-1">
                       <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center">
                         Editar
+
                       </button>
                       <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center">
                         <img src={download} alt="" />
