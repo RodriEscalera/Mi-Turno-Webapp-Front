@@ -33,7 +33,7 @@ function MyBookings() {
                 <div className=" p-2 lg:w-full md:w-1/2">
                   <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
                     <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
-                      <div>
+                      <div className="w-28">
                         <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
                           Nombre y Apellido
                         </h2>
