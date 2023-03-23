@@ -12,11 +12,9 @@ function QRGenerator(props: props) {
       <QRCode
         id={documentId}
         value={value}
-        size={50}
+        size={150}
         bgColor="#F5F5F5"
-        fgColor="#000"
-        includeMargin
-        level={"H"}
+        fgColor="#000000"
       />
     </div>
   );
