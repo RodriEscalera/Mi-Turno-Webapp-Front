@@ -1,4 +1,4 @@
-const DeleteBooking = () => {
+const DeleteBooking = ({ handleDelete, asyncFunctionCloseModal }: any) => {
   return (
     <div
       className="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover"
@@ -34,10 +34,16 @@ const DeleteBooking = () => {
 
           <div className=" w-full p-3 text-center md:block">
             <div className="flex flex-row space-x-3">
-              <button className="flex items-center justify-center w-1/2 px-6 py-3 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-red-500 focus:ring-0 mb-1 ">
+              <button
+                className="flex items-center justify-center w-1/2 px-6 py-3 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-red-500 focus:ring-0 mb-1 "
+                onClick={handleDelete}
+              >
                 Si
               </button>
-              <button className="flex items-center justify-center w-1/2 px-6 py-3 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:ring-0 mb-1 ">
+              <button
+                className="flex items-center justify-center w-1/2 px-6 py-3 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:ring-0 mb-1 "
+                onClick={asyncFunctionCloseModal}
+              >
                 No
               </button>
             </div>

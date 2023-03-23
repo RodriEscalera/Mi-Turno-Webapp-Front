@@ -17,8 +17,11 @@ import Operators from "./Component/Operators";
 import ChangePassword from "./Component/ChangePassword";
 import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
+import ViewPDF from "./commons/PdfDocument/ViewPDF";
+import UpdateBooking from "./Component/UpdateBooking";
 
 function App(): JSX.Element {
+  const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const me = async () => {
@@ -29,7 +32,9 @@ function App(): JSX.Element {
   };
 
   useEffect(() => {
-    me();
+    if (token) {
+      me();
+    }
   }, []);
 
   return (
@@ -48,6 +53,8 @@ function App(): JSX.Element {
         <Route path="/changePassword/*" element={<ChangePassword />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/booking" element={<Booking />} />
+        {/* <Route path="/viewPDF" element={<ViewPDF />} /> */}
+        <Route path="/updateBooking" element={<UpdateBooking />} />
 
         {user.usertype === "admin" && (
           <>
