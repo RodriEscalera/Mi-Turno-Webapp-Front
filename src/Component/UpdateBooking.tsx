@@ -4,28 +4,25 @@ import Calendar from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "../commons/DropDown";
 import FormReservation, { FormData } from "../commons/FormReservation";
+import { updateBookingData } from "../store/bookingData";
 
 interface Reservation {
-  id: number;
+  id: string;
   branch: string;
   date: Date;
-  user: {
-    time: string;
-    fullName: string;
-    email: string;
-    phone: string;
-  };
+  time: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  available: boolean;
 }
 
 const UpdateBooking = () => {
   const dispatch = useDispatch();
-  const bookingData = useSelector((state: any) => state.data);
-  const user = useSelector((state: any) => state.user);
+  const updateBookingData = useSelector((state: any) => state.data);
 
   const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [selectedReservation, setSelectedReservation] =
-    useState<Reservation | null>(null);
-  const [branches, setBranches] = useState<string[]>([]);
+
   const [selectedBranch, setSelectedBranch] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [userForm, setUserForm] = useState<FormData>({
@@ -35,15 +32,24 @@ const UpdateBooking = () => {
     phone: "",
   });
 
+  console.log(updateBookingData);
+  
+
   useEffect(() => {
-    const getOneBooking = async () => {
-      const response = await axios.get(
-        `http://localhost:3001/api/booking/getOneBooking/${bookingData.id}`
-      );
-      setReservations(response.data);
-    };
-    getOneBooking();
-  }, []);
+    if (updateBookingData.id) {
+      const updatedReservation: Reservation = {
+        id: updateBookingData.id,
+        branch: updateBookingData.branch,
+        date: updateBookingData.date,
+        time: updateBookingData.time,
+        fullName: updateBookingData.fullName,
+        email: updateBookingData.email,
+        phone: updateBookingData.phone,
+        available: updateBookingData.available,
+      };
+      setReservations([updatedReservation]);
+    }
+  }, [updateBookingData]);
 
   const handleBranchChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedBranch(event.target.value);
@@ -61,19 +67,11 @@ const UpdateBooking = () => {
     e.preventDefault();
 
     try {
-      await axios
-        .put(`http://localhost:3001/api/booking/updateBooking/`)
-        .then(() => {
-          setSelectedReservation(null);
-          setDate(new Date());
-          setSelectedBranch("");
-          setUserForm({
-            time: "",
-            fullName: "",
-            email: "",
-            phone: "",
-          });
-        });
+      const response = await axios.put(
+        `http://localhost:3001/api/booking/updateBooking`,
+        updateBookingData
+      );
+      return response.data;
     } catch (error) {
       console.error(error);
     }
@@ -120,18 +118,20 @@ const UpdateBooking = () => {
                   </div>
                 </div>
               </div>
-                    <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
-                      <div className="flex flex-col items-center">
-                        <label htmlFor="calendar">
-                          Selecciona un nuevo día
-                        </label>
-                        <Calendar onChange={handleDateChange} value={date}  className="border-none" />
-                      </div>
-                    </div>
+              <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
+                <div className="flex flex-col items-center">
+                  <label htmlFor="calendar">Selecciona un nuevo día</label>
+                  <Calendar
+                    onChange={handleDateChange}
+                    value={date}
+                    className="border-none"
+                  />
+                </div>
+              </div>
             </div>
           </section>
         </form>
-     </>
+      </>
     </div>
   );
 };
