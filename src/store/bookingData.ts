@@ -20,7 +20,7 @@ interface IdataBooking {
 const reducer = createReducer(initialState, {
   [setBookingData.type]: (state, action) => {
     const { field, data } = action.payload;
-    
+
     return {
       ...state,
       [field]: data,
