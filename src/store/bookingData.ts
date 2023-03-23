@@ -3,6 +3,7 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 export const setBookingData = createAction<IdataBooking>("SET_BOOKING_DATA");
 
 const initialState = {
+  id: null,
   branch: null,
   date: null,
   time: null,
