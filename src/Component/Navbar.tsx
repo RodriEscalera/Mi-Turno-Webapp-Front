@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const user = useSelector((state: any) => state.user);
-  console.log(user.userType);
+
   return (
     <nav className="shadow-nav lg:py-4 lg:px-24 border-gray-200 rounded white:bg-gray-800 white:border-gray-700 sm: py-3 px-5 bg-white">
       {user.usertype !== "admin" ? (
