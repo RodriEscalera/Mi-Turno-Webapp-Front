@@ -3,7 +3,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../store/updateUser";
-import { UserState } from "../store/updateUser";
 
 type buttonEvent = React.MouseEvent<HTMLButtonElement>;
 
