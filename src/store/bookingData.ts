@@ -1,10 +1,10 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setBookingData = createAction<IdataBooking>("SET_BOOKING_DATA");
-export const updateBookingData = createAction<IdataBooking>("UPDATE_BOOKING_DATA");
+export const setUpdateBookingData = createAction<IdataBooking>("UPDATE_BOOKING_DATA");
 
 const initialState = {
-  id: null,
+  
   branch: null,
   date: null,
   time: null,
@@ -29,7 +29,7 @@ const reducer = createReducer(initialState, {
       [field]: data,
     };
   },
-  [updateBookingData.type]: (state, action) => {
+  [setUpdateBookingData.type]: (state, action) => {
     return {
       ...state,
       ...action.payload,
