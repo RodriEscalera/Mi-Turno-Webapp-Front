@@ -4,26 +4,26 @@ import Calendar from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "../commons/DropDown";
 import FormReservation, { FormData } from "../commons/FormReservation";
-import { updateBookingData } from "../store/bookingData";
+import { setUpdateBookingData } from "../store/bookingData";
+import useQuery from "../Hooks/useQuery";
 
-interface Reservation {
+interface Branch {
   id: string;
-  branch: string;
-  date: Date;
-  time: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  available: boolean;
 }
 
 const UpdateBooking = () => {
   const dispatch = useDispatch();
   const updateBookingData = useSelector((state: any) => state.data);
+  const user = useSelector((state: any) => state.user);
 
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const query = useQuery();
+  const bookingId = query.get("bookingId");
+  console.log(bookingId);
 
-  const [selectedBranch, setSelectedBranch] = useState<string>("");
+  const [reservations, setReservations] = useState<any>([]);
+
+  const [selectedBranch, setSelectedBranch] = useState<Branch>();
+
   const [date, setDate] = useState<Date>(new Date());
   const [userForm, setUserForm] = useState<FormData>({
     time: "",
@@ -32,27 +32,23 @@ const UpdateBooking = () => {
     phone: "",
   });
 
-  console.log(updateBookingData);
-  
-
   useEffect(() => {
-    if (updateBookingData.id) {
-      const updatedReservation: Reservation = {
-        id: updateBookingData.id,
-        branch: updateBookingData.branch,
-        date: updateBookingData.date,
-        time: updateBookingData.time,
-        fullName: updateBookingData.fullName,
-        email: updateBookingData.email,
-        phone: updateBookingData.phone,
-        available: updateBookingData.available,
-      };
-      setReservations([updatedReservation]);
-    }
+    getReservation();
   }, [updateBookingData]);
 
-  const handleBranchChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedBranch(event.target.value);
+  const getReservation = async () => {
+    try {
+      const { data } = await axios.get<any>(
+        `http://localhost:3001/api/booking/getOneBooking/${bookingId}`
+      );
+      setReservations(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleBranchChange = (branch: Branch) => {
+    setSelectedBranch(branch);
   };
 
   const handleDateChange = (newDate: Date) => {
@@ -68,10 +64,20 @@ const UpdateBooking = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3001/api/booking/updateBooking`,
-        updateBookingData
+        `http://localhost:3001/api/booking/updateBooking/${bookingId}`,
+        {
+          ...updateBookingData,
+          user: user.id,
+          branch: selectedBranch,
+          date: date?.toLocaleDateString(),
+          time: userForm.time,
+          fullName: userForm.fullName,
+          email: userForm.email,
+          phone: userForm.phone,
+        }
       );
-      return response.data;
+
+      dispatch(setUpdateBookingData(response.data));
     } catch (error) {
       console.error(error);
     }

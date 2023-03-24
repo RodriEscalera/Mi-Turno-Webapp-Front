@@ -7,8 +7,11 @@ import QRGenerator from "../commons/PdfDocument/QrGenerator";
 import DocumentPDF from "../commons/PdfDocument/DocumentPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import DeleteBooking from "../commons/alerts/DeleteBooking";
+import { useNavigate } from "react-router";
+
 
 function MyBookings() {
+  const navigate = useNavigate();
   const [booking, setBooking] = useState<any>([]);
   const [showModal, setShowModal] = useState(0);
   const [idBooking, setIdBooking] = useState("");
@@ -33,6 +36,14 @@ function MyBookings() {
     setIdBooking(id);
     return setShowModal(1);
   };
+  
+  const editFunction = (id: any) => {
+   
+      setIdBooking(id);
+  
+      navigate(`/updateBooking?bookingId=${id}`);
+  };
+  console.log(idBooking);
 
   const handleDelete = () => {
     axios
@@ -102,7 +113,10 @@ function MyBookings() {
                         </div>
                       </div>
                       <div className="flex space-x-1">
-                        <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center">
+                        <button
+                          className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
+                          onClick={() => editFunction(booking[i]._id)}
+                        >
                           Editar
                         </button>
 

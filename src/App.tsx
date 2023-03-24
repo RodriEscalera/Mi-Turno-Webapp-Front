@@ -54,7 +54,7 @@ function App(): JSX.Element {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/booking" element={<Booking />} />
         {/* <Route path="/viewPDF" element={<ViewPDF />} /> */}
-        <Route path="/updateBooking" element={<UpdateBooking />} />
+        <Route path="/updateBooking/*" element={<UpdateBooking />} />
 
         {user.usertype === "admin" && (
           <>
