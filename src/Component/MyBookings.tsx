@@ -9,7 +9,6 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import DeleteBooking from "../commons/alerts/DeleteBooking";
 import { useNavigate } from "react-router";
 
-
 function MyBookings() {
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>([]);
@@ -36,14 +35,12 @@ function MyBookings() {
     setIdBooking(id);
     return setShowModal(1);
   };
-  
+
   const editFunction = (id: any) => {
-   
-      setIdBooking(id);
-  
-      navigate(`/updateBooking?bookingId=${id}`);
+    setIdBooking(id);
+
+    navigate(`/updateBooking?bookingId=${id}`);
   };
-  console.log(idBooking);
 
   const handleDelete = () => {
     axios
