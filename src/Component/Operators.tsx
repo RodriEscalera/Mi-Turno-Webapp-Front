@@ -1,4 +1,30 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 function Operators() {
+  const [operators, setOperators] = useState<any>([]);
+  const user = useSelector((state: any) => state.user);
+
+  useEffect(() => {
+    getOperators();
+  }, [user]);
+
+  const getOperators = async () => {
+    try {
+      const { data } = await axios.post<any, any>(
+        `http://localhost:3001/api/users/findAllOperators`,
+        { token: window.localStorage.getItem("token") }
+      );
+
+      setOperators(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(operators);
+
   return (
     <section className="h-screen w-full p-5">
       <div className="max-w-6xl mx-auto">
@@ -6,100 +32,56 @@ function Operators() {
           Operadores
         </h1>
         <div className="lg:flex lg:flex-wrap">
-          {/* Aca va el .map */}
-          <div className=" p-2 lg:w-full md:w-1/2">
-            <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-              <div className=" grid grid-cols-1 lg:gap-44 lg:grid-cols-4">
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Nombre
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    Contenido
-                  </p>
+          {operators.length === 0
+            ? null
+            : operators.map((operator: any, i: any) => (
+                <div className=" p-2 lg:w-full md:w-1/2">
+                  <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
+                    <div className=" grid grid-cols-1 lg:gap-44 lg:grid-cols-4">
+                      <div>
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Nombre
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {operator.fullName}
+                        </p>
+                      </div>
+                      <div>
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Mail
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {operator.email}
+                        </p>
+                      </div>
+                      <div>
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Sucursal
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {operator.branch}
+                        </p>
+                      </div>
+                      <div>
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Contraseña
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          **********
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <button
+                        className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-6 py-3 text-center inline-flex items-center"
+                        type="button"
+                      >
+                        Editar
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Mail
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    Contenido
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Sucursal
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    Contenido
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Contraseña
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    **********
-                  </p>
-                </div>
-              </div>
-              <div>
-                <button
-                  className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-6 py-3 text-center inline-flex items-center"
-                  type="button"
-                >
-                  Editar
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Este se elimina, es solo de prueba */}
-          <div className=" p-2 lg:w-full md:w-1/2">
-            <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-              <div className=" grid grid-cols-1 lg:gap-44 lg:grid-cols-4">
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Nombre
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    Contenido
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Mail
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    Contenido
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Sucursal
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    Contenido
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                    Contraseña
-                  </h2>
-                  <p className="text-sm font-roboto font-semibold leading-4">
-                    **********
-                  </p>
-                </div>
-              </div>
-              <div>
-                <button
-                  className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-6 py-3 text-center inline-flex items-center"
-                  type="button"
-                >
-                  Editar
-                </button>
-              </div>
-            </div>
-          </div>
+              ))}
         </div>
       </div>
     </section>
