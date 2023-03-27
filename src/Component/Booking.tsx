@@ -2,21 +2,30 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import QRGenerator from "../commons/PdfDocument/QrGenerator";
+import DocumentPDF from "../commons/PdfDocument/DocumentPDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import cruz from "../assets/icons/cruzRoja.svg";
 import llave from "../assets/icons/llaveInglesa.svg";
 import DeleteBooking from "../commons/alerts/DeleteBooking";
 import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
-  const [lastBooking, setLastBooking] = useState<any>([]);
+  const [lastBooking, setLastBooking] = useState<any>({});
   const [showModal, setShowModal] = useState(0);
-
+  const [render, setRender] = useState(false);
   const user = useSelector((state: any) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
     getBooking();
   }, [user]);
+
+  useEffect(() => {
+    if (lastBooking._id) {
+      setRender(true);
+    }
+  }, [lastBooking]);
 
   const getBooking = async () => {
     const { data } = await axios.get<any, any>(
@@ -38,12 +47,23 @@ const Booking = () => {
       .catch((err) => console.log(err));
   };
 
+  const editFunction = (id: any) => {
+    navigate(`/updateBooking?bookingId=${lastBooking._id}`);
+  };
+
   const asyncFunctionCloseModal = () => {
     return setShowModal(0);
   };
+  console.log(lastBooking);
 
   return (
     <>
+      <div className="absolute hidden">
+        <QRGenerator
+          value={lastBooking._id}
+          documentId={`qr_${lastBooking._id}`}
+        />
+      </div>
       <div className="mt-14 mx-24 px-8 h-screen">
         <div className="">
           <svg
@@ -70,9 +90,21 @@ const Booking = () => {
             reservación. Recordá revisar tu buzón de correo no deseado o
             promociones.
           </p>
-          <button className="flex items-center justify-center max-w-sm px-10 py-3 m-auto mt-6 mb-10 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 ">
-            ¿Quéres imprimir tu comprobante?
-          </button>
+          {render ? (
+            <button className="flex items-center justify-center max-w-sm px-10 py-3 m-auto mt-6 mb-10 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-violet-500 mb-5 ">
+              <PDFDownloadLink
+                fileName={`${lastBooking.fullName}_turno.pdf`}
+                document={
+                  <DocumentPDF
+                    id={`qr_${lastBooking._id}`}
+                    data={lastBooking}
+                  />
+                }
+              >
+                ¿Quéres imprimir tu comprobante?
+              </PDFDownloadLink>
+            </button>
+          ) : null}
         </div>
         <hr className=" border-gray-300" />
         <div className="flex flex-row mt-6">
@@ -115,6 +147,7 @@ const Booking = () => {
             <button
               className="flex bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded-lg px-6 py-2 m-2 mb-1 text-center items-center text-base justify-center"
               type="button"
+              onClick={editFunction}
             >
               <img className="mr-2" src={llave} alt="" />
               Editar reserva
