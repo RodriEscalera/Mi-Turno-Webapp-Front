@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Operators() {
   const [operators, setOperators] = useState<any>([]);
@@ -28,9 +29,16 @@ function Operators() {
   return (
     <section className="h-screen w-full p-5">
       <div className="max-w-6xl mx-auto">
-        <h1 className="w-full font-roboto text-xl font-semibold p-2 mt-3 mb-3 text-start ">
-          Operadores
-        </h1>
+        <div className="flex flex-wrap items-center justify-between">
+          <h1 className="font-roboto text-xl font-semibold p-2 mt-3 mb-3 text-start ">
+            Operadores
+          </h1>
+          <Link to={"/newOperator"}>
+            <button className="text-center bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded mr-2">
+              Nuevo Operador
+            </button>
+          </Link>
+        </div>
         <div className="lg:flex lg:flex-wrap">
           {operators.length === 0
             ? null
