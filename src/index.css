@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css");
+
+/* .rdp-button:hover {
+  background-color: rgb(184, 203, 62);
+  color: rgb(227, 108, 49);
+} */
+
+/* .rdp-day:hover {
+  color: rgb(227, 108, 49);
+  background-color: rgb(166, 0, 255);
+}
+
+.rdp-button_reset {
+  color: rgb(31, 189, 214);
+} */
