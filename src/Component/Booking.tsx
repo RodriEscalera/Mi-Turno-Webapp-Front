@@ -54,7 +54,7 @@ const Booking = () => {
   const asyncFunctionCloseModal = () => {
     return setShowModal(0);
   };
-  console.log(lastBooking);
+  //console.log(lastBooking);
 
   return (
     <>

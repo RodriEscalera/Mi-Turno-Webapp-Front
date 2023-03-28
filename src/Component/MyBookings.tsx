@@ -30,7 +30,6 @@ function MyBookings() {
       console.log(error);
     }
   };
- 
 
   const deleteFunction = (id: any) => {
     setIdBooking(id);
@@ -42,7 +41,6 @@ function MyBookings() {
 
     navigate(`/updateBooking?bookingId=${id}`);
   };
-  
 
   const handleDelete = () => {
     axios
@@ -55,14 +53,17 @@ function MyBookings() {
   const asyncFunctionCloseModal = () => {
     return setShowModal(0);
   };
-
   return (
     <>
       <div className="absolute hidden">
         {booking.length === 0
           ? null
-          : booking.map((shift: any) => (
-              <QRGenerator value={shift._id} documentId={`qr_${shift._id}`} />
+          : booking.map((shift: any, key: any) => (
+              <QRGenerator
+                key={key}
+                value={shift._id}
+                documentId={`qr_${shift._id}`}
+              />
             ))}
       </div>
       <section className="h-screen w-full p-5">
