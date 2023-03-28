@@ -6,7 +6,6 @@ import QRCode from "react-qr-code";
 const DocumentPDF = ({ id, data }: any) => {
   const canva = document.getElementById(id) as HTMLCanvasElement;
   const dataUrl = canva?.toDataURL();
-  console.log(data, "jaikelzon paravia");
 
   return (
     <Document>

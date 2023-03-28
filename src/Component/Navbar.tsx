@@ -3,11 +3,30 @@ import miCuenta from "../assets/icons/miCuenta.svg";
 import reportes from "../assets/icons/reports.svg";
 import operador from "../assets/icons/operator.svg";
 import sucursal from "../assets/icons/branch.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { setFixRender } from "../store/fixRender";
+import { useEffect } from "react";
+
 
 export const Navbar = () => {
   const user = useSelector((state: any) => state.user);
+  const location = useLocation();
+  
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if(location.pathname === "/updateBooking") {
+      dispatch(setFixRender(true))
+    }
+    else {
+      dispatch(setFixRender(false))
+    }
+  
+  }, [location.pathname])
+  
 
   return (
     <nav className="shadow-nav lg:py-4 lg:px-24 border-gray-200 rounded white:bg-gray-800 white:border-gray-700 sm: py-3 px-5 bg-white">

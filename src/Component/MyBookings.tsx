@@ -30,8 +30,9 @@ function MyBookings() {
       console.log(error);
     }
   };
+ 
 
-  const asyncFunction = (id: any) => {
+  const deleteFunction = (id: any) => {
     setIdBooking(id);
     return setShowModal(1);
   };
@@ -41,6 +42,7 @@ function MyBookings() {
 
     navigate(`/updateBooking?bookingId=${id}`);
   };
+  
 
   const handleDelete = () => {
     axios
@@ -133,7 +135,7 @@ function MyBookings() {
 
                         <button
                           className="bg-red-300 hover:bg-red-400 text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          onClick={() => asyncFunction(booking[i]._id)}
+                          onClick={() => deleteFunction(booking[i]._id)}
                         >
                           <img src={bin} alt="" />
                         </button>
@@ -146,7 +148,7 @@ function MyBookings() {
       </section>
       {showModal === 1 ? (
         <DeleteBooking
-          asyncFunction={asyncFunction}
+          asyncFunction={deleteFunction}
           handleDelete={handleDelete}
           asyncFunctionCloseModal={asyncFunctionCloseModal}
         />
