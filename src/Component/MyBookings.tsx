@@ -78,7 +78,7 @@ function MyBookings() {
                       <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
                         <div className="w-28">
                           <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Nombre y Apellido{i}
+                            Nombre y Apellido
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
                             {turno.fullName}
