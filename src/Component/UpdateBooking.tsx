@@ -135,7 +135,7 @@ const UpdateBooking = () => {
                           <input
                             id="branch"
                             name="branch"
-                            type="branch"
+                            type="text"
                             defaultValue={updateBookingData?.branch?.name}
                             className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 "
                           />
@@ -164,7 +164,7 @@ const UpdateBooking = () => {
                           <input
                             id="form"
                             name="form"
-                            type="form"
+                            type="text"
                             disabled
                             defaultValue={updateBookingData.fullName}
                             className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 "
