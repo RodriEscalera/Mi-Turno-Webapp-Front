@@ -3,7 +3,7 @@ import miCuenta from "../assets/icons/miCuenta.svg";
 import reportes from "../assets/icons/reports.svg";
 import operador from "../assets/icons/operator.svg";
 import sucursal from "../assets/icons/branch.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {

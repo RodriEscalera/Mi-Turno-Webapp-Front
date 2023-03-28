@@ -2,8 +2,9 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setBookingData = createAction<IdataBooking>("SET_BOOKING_DATA");
 export const setUpdateBookingData = createAction<IdataBooking>("UPDATE_BOOKING_DATA");
+export const setBringBookingData = createAction<any>("BRING_BOOKING_DATA");
 
-const initialState = {
+export const initialStateBookingData = {
   
   branch: null,
   date: null,
@@ -20,7 +21,7 @@ interface IdataBooking {
 }
 
 
-const reducer = createReducer(initialState, {
+const reducer = createReducer(initialStateBookingData, {
   [setBookingData.type]: (state, action) => {
     const { field, data } = action.payload;
     
@@ -35,6 +36,9 @@ const reducer = createReducer(initialState, {
       ...action.payload,
     };
   },
+  [setBringBookingData.type]: (state, action) => {
+    return action.payload
+  }
 });
 
 export default reducer;

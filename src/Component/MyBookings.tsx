@@ -31,7 +31,7 @@ function MyBookings() {
     }
   };
 
-  const asyncFunction = (id: any) => {
+  const deleteFunction = (id: any) => {
     setIdBooking(id);
     return setShowModal(1);
   };
@@ -53,14 +53,17 @@ function MyBookings() {
   const asyncFunctionCloseModal = () => {
     return setShowModal(0);
   };
-
   return (
     <>
       <div className="absolute hidden">
         {booking.length === 0
           ? null
-          : booking.map((shift: any) => (
-              <QRGenerator value={shift._id} documentId={`qr_${shift._id}`} />
+          : booking.map((shift: any, key: any) => (
+              <QRGenerator
+                key={key}
+                value={shift._id}
+                documentId={`qr_${shift._id}`}
+              />
             ))}
       </div>
       <section className="h-screen w-full p-5">
@@ -133,7 +136,7 @@ function MyBookings() {
 
                         <button
                           className="bg-red-300 hover:bg-red-400 text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          onClick={() => asyncFunction(booking[i]._id)}
+                          onClick={() => deleteFunction(booking[i]._id)}
                         >
                           <img src={bin} alt="" />
                         </button>
@@ -146,7 +149,7 @@ function MyBookings() {
       </section>
       {showModal === 1 ? (
         <DeleteBooking
-          asyncFunction={asyncFunction}
+          asyncFunction={deleteFunction}
           handleDelete={handleDelete}
           asyncFunctionCloseModal={asyncFunctionCloseModal}
         />
