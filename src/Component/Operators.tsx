@@ -24,8 +24,6 @@ function Operators() {
     }
   };
 
-  console.log(operators);
-
   return (
     <section className="h-screen w-full p-5">
       <div className="max-w-6xl mx-auto">
