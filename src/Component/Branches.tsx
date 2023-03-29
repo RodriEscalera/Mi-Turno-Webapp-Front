@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useMediaQuery from "../Hooks/useMediaQuery";
+
 function Branches() {
   const [branches, setbranches] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);

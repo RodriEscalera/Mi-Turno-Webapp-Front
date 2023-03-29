@@ -34,14 +34,11 @@ const Dropdown = (props: DropDownProps) => {
     //dispatch(setBookingData({field:"branch", data:target.value}))
   };
 
-
-  
-
   return (
     <div className="relative w-full">
       <select
         required
-        className="w-full p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
+        className="w-full p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
         onChange={handleSelect}
       >
         <option selected></option>
