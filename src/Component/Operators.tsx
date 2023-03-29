@@ -25,7 +25,7 @@ function Operators() {
   };
 
   return (
-    <section className="h-screen w-full p-5">
+    <section className="h-auto w-full p-5">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-wrap items-center justify-between">
           <h1 className="font-roboto text-xl font-semibold p-2 mt-3 mb-3 text-start ">
@@ -41,7 +41,7 @@ function Operators() {
           {operators.length === 0
             ? null
             : operators.map((operator: any, i: any) => (
-                <div className=" p-2 lg:w-full md:w-1/2">
+                <div className=" p-2 lg:w-full md:w-1/2" key={i}>
                   <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
                     <div className=" grid grid-cols-1 lg:gap-44 lg:grid-cols-4">
                       <div>
@@ -65,15 +65,9 @@ function Operators() {
                           Sucursal
                         </h2>
                         <p className="text-sm font-roboto font-semibold leading-4">
-                          {operator.branch}
-                        </p>
-                      </div>
-                      <div>
-                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                          Contraseña
-                        </h2>
-                        <p className="text-sm font-roboto font-semibold leading-4">
-                          **********
+                          {operator.branch.map(
+                            (nameBranch: any) => nameBranch.name
+                          )}
                         </p>
                       </div>
                     </div>
