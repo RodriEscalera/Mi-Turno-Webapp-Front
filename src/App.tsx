@@ -19,8 +19,6 @@ import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
 import ViewPDF from "./commons/PdfDocument/ViewPDF";
 import UpdateBooking from "./Component/UpdateBooking";
-import CalendarTest from "./Component/CalendarTest";
-import "react-day-picker/dist/style.css";
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -56,7 +54,6 @@ function App(): JSX.Element {
         <Route path="/booking" element={<Booking />} />
         {/* <Route path="/viewPDF" element={<ViewPDF />} /> */}
         <Route path="/updateBooking/*" element={<UpdateBooking />} />
-        <Route path="/calendar" element={<CalendarTest />} />
 
         {user.usertype === "admin" && (
           <>

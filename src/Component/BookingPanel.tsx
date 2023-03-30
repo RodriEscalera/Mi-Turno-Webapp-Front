@@ -12,6 +12,7 @@ import Counter from "../commons/Counter";
 import { FormData } from "../commons/FormReservation";
 import { useNavigate } from "react-router-dom";
 import ModalCheck from "../commons/alerts/ModalCheck";
+import CalendarFull from "../Component/CalendarFull";
 
 interface Branch {
   id: number;
@@ -55,8 +56,8 @@ const BookingPanel = () => {
     setCurrentStep(2);
   };
 
-  const handleOnChangeDate = (date: Date) => {
-    setSelectedDate(date);
+  const handleOnChangeDate = (date: Date | any) => {
+    setSelectedDate(date.$d);
     setCurrentStep(3);
   };
 
@@ -200,12 +201,9 @@ const BookingPanel = () => {
               </div>
             </div>
             {selectedBranch && (
-              <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
+              <div className="lg:w-457 lg:ml-3 p-5  rounded-lg bg-white lg:max-h-[21rem]">
                 <div className="flex flex-col items-center">
-                  <TurnoCalendar
-                    onChangeDate={handleOnChangeDate}
-                    className="border-none"
-                  />
+                  <CalendarFull onChangeDate={handleOnChangeDate} />
                   {selectedDate && (
                     <p className="mt-2">
                       Fecha seleccionada: {selectedDate.toLocaleDateString()}
