@@ -19,7 +19,6 @@ import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
 import ViewPDF from "./commons/PdfDocument/ViewPDF";
 import UpdateBooking from "./Component/UpdateBooking";
-
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
