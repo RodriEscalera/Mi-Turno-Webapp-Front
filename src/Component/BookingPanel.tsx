@@ -24,7 +24,7 @@ const BookingPanel = () => {
   const [showModal, setShowModal] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<any | null>("");
   const [selectedForm, setSelectedForm] = useState<FormData>({
     fullName: "",
     phone: "",
@@ -39,7 +39,7 @@ const BookingPanel = () => {
     dispatch(
       setBookingData({
         field: "date",
-        data: selectedDate?.toLocaleDateString(),
+        data: selectedDate,
       })
     );
     dispatch(setBookingData({ field: "time", data: selectedForm.time }));
@@ -56,8 +56,8 @@ const BookingPanel = () => {
     setCurrentStep(2);
   };
 
-  const handleOnChangeDate = (date: Date | any) => {
-    setSelectedDate(date.$d);
+  const handleOnChangeDate = (date: any) => {
+    setSelectedDate(date);
     setCurrentStep(3);
   };
 
@@ -205,9 +205,7 @@ const BookingPanel = () => {
                 <div className="flex flex-col items-center">
                   <CalendarFull onChangeDate={handleOnChangeDate} />
                   {selectedDate && (
-                    <p className="mt-2">
-                      Fecha seleccionada: {selectedDate.toLocaleDateString()}
-                    </p>
+                    <p className="mt-2">Fecha seleccionada: {selectedDate}</p>
                   )}
                 </div>
               </div>

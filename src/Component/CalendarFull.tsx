@@ -5,6 +5,7 @@ import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 interface Props {
   onChangeDate: (date: Date) => void;
 }
@@ -12,7 +13,7 @@ export default function CalendarTest({ onChangeDate }: Props) {
   const [selectedDate, setSelectedDate] = useState<any>({ initial: true });
   const [month, setMonth] = useState<any>({ initial: true });
   const [soldOutBookings, setSoldOutBookings] = useState<any[]>([]);
-
+  const bookingInGeneral = useSelector((state: any) => state.bookingInGeneral);
   const handle = (date: any) => {
     let bool = false;
     for (let i = 0; i < soldOutBookings.length; i++) {
@@ -49,7 +50,7 @@ export default function CalendarTest({ onChangeDate }: Props) {
           date: month.initial
             ? dateFormatYMD(new Date())
             : dateFormatYMD(month.$d),
-          branch: "6421cb7a5804e40086776e95",
+          branch: bookingInGeneral.branch,
         }
       );
 
@@ -58,10 +59,10 @@ export default function CalendarTest({ onChangeDate }: Props) {
       console.log(err);
     }
   };
-
+  //console.log(bookingInGeneral);
   useEffect(() => {
     getSoldOutBookings();
-  }, [month]);
+  }, [month, bookingInGeneral?.branch]);
   useEffect(() => {
     getSoldOutBookings();
   }, []);
@@ -71,7 +72,8 @@ export default function CalendarTest({ onChangeDate }: Props) {
   };
 
   const handleDayChange = (newValue: any) => {
-    onChangeDate(newValue);
+    const format: any = dateFormatYMD(newValue.$d);
+    onChangeDate(format);
   };
 
   return (
