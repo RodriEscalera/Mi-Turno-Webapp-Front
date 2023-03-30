@@ -6,7 +6,7 @@ import stepsReducer from "./steps";
 const store = configureStore({
   reducer: {
     user: userReducer,
-    data: bookingDataReducer,
+    bookingInGeneral: bookingDataReducer,
     steps: stepsReducer,
   },
 });

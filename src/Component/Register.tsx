@@ -132,7 +132,6 @@ const Register = () => {
     });
   };
 
-  // console.log(haveUp);
   const validatePassword2 = () => {
     if (password !== password2) {
       setIsMatchPassword(false);

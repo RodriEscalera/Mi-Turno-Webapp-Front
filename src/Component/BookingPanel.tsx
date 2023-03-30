@@ -32,7 +32,7 @@ const BookingPanel = () => {
     time: "",
   });
 
-  const bookingData = useSelector((state: any) => state.data);
+  const bookingData = useSelector((state: any) => state.bookingInGeneral);
 
   useEffect(() => {
     dispatch(setBookingData({ field: "branch", data: selectedBranch }));
