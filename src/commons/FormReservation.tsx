@@ -104,7 +104,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
         <select
           name="time"
           id="time"
-          className="w-full p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+          className="w-full p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
           onChange={handleChange}
           required
         >
@@ -128,7 +128,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
             name="fullName"
             type="text"
             id="fullName"
-            className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+            className="w-full text-sm p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
             onChange={handleChange}
             required
           />
@@ -144,7 +144,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
             name="phone"
             type="text"
             id="phone"
-            className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+            className="w-full text-sm p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
             onChange={handleChange}
             required
           />
@@ -160,7 +160,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
         <input
           name="email"
           type="email"
-          className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+          className="w-full text-sm p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
           id="email"
           onChange={handleChange}
           required
