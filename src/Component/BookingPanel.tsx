@@ -201,11 +201,13 @@ const BookingPanel = () => {
               </div>
             </div>
             {selectedBranch && (
-              <div className="lg:w-457 lg:ml-3 p-5  rounded-lg bg-white lg:max-h-[21rem]">
+              <div className="lg:w-457 lg:ml-3 p-5  rounded-lg bg-white lg:max-h-[23rem]">
                 <div className="flex flex-col items-center">
                   <CalendarFull onChangeDate={handleOnChangeDate} />
                   {selectedDate && (
-                    <p className="mt-2">Fecha seleccionada: {selectedDate}</p>
+                    <p className="w-457 text-center py-4 font-roboto rounded-b-lg bg-white">
+                      Fecha seleccionada: {selectedDate}
+                    </p>
                   )}
                 </div>
               </div>
