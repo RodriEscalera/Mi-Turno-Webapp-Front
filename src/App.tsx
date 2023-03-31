@@ -19,6 +19,7 @@ import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
 import ViewPDF from "./commons/PdfDocument/ViewPDF";
 import UpdateBooking from "./Component/UpdateBooking";
+import OperatorBooking from "./Component/OperatorBooking";
 
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
@@ -62,9 +63,9 @@ function App(): JSX.Element {
             <Route path="/branches" element={<Branches />} />
           </>
         )}
-        {/* {user.usertype === "admin" && (
-          <Route path="/newOperator" element={<NewOperator />} />
-        )} */}
+         {user.usertype === "operator" && (
+          <Route path="/operatorBooking" element={<OperatorBooking />} />
+        )} 
       </Routes>
     </div>
   );
