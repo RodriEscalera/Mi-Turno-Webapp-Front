@@ -1,67 +1,83 @@
-import { useInput } from "../Hooks/useInput";
-import { useNavigate } from "react-router-dom";
+import Dropdown from "../commons/DropDown";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setOperatorData,
+  updateOperator,
+  setBringOperatorData,
+  initialStateOperatorData,
+} from "../store/updateOperator";
+import useQuery from "../Hooks/useQuery";
 
-import { useState } from "react";
-import DropDown from "../commons/DropDown";
-
-interface FormData {
-  name: string;
-  dni: number;
-  branch: string;
-  email: string;
-  password: string;
-  password2: string;
-  usertype: string;
-}
 interface Branch {
   id: number;
 }
 
-function NewOperator() {
+const UpdateOperator = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
+  const updateOperator = useSelector((state: any) => state.updateOp);
+  const { id } = useParams();
+  const [operator, setOperator] = useState<any>([]);
+
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+  useEffect(() => {
+    const renderBooking = async () => {
+      dispatch(setBringOperatorData(initialStateOperatorData));
+      await getOperator();
+    };
 
-  const navigate = useNavigate();
-  const { formulario, handleChange } = useInput<FormData>({
-    name: "",
-    branch: "",
-    dni: 0,
-    email: "",
-    password: "",
-    password2: "",
-    usertype: "",
-  });
+    renderBooking();
+  }, []);
 
-  const { name, dni, email, password, password2 } = formulario;
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await axios
-        .post("http://localhost:3001/api/admin/createoperator", {
-          token: window.localStorage.getItem("token"),
-          fullName: name,
-          branch: selectedBranch,
-          dni: dni,
-          email: email,
-          password: password,
-          password2: password2,
-        })
-        .then((res) => res.data)
-        .then(() => navigate("/operators"));
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
   };
 
+  const getOperator = async () => {
+    try {
+      const { data } = await axios.post<any>(
+        `http://localhost:3001/api/users/findOne/${id}`,
+        { token: window.localStorage.getItem("token") }
+      );
+      setOperator(data);
+      for (const key in data) {
+        dispatch(setOperatorData({ field: key, data: data[key] }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/admin/updateOperator/${id}`,
+        {
+          token: window.localStorage.getItem("token"),
+          ...updateOperator,
+          user: user.id,
+          branch: selectedBranch,
+          fullName: user.fullName,
+          emaill: user.email,
+          dni: user.dni,
+          password: user.password,
+        }
+      );
+      dispatch(updateOperator(response.data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  console.log(operator.password, "ESTO");
   return (
     <section>
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
         <h1 className="w-full font-roboto text-xl font-semibold mt-5 mb-5 text-start ">
-          Creación de operadores
+          Editar operador
         </h1>
         <form className="space-y-6 w-full" onSubmit={handleSubmit}>
           <div>
@@ -73,8 +89,7 @@ function NewOperator() {
             </label>
             <div className="mt-1">
               <input
-                value={name}
-                onChange={handleChange}
+                defaultValue={operator.fullName}
                 id="name"
                 name="name"
                 type="text"
@@ -93,8 +108,7 @@ function NewOperator() {
             </label>
             <div className="mt-1">
               <input
-                value={email}
-                onChange={handleChange}
+                defaultValue={operator.email}
                 id="email"
                 name="email"
                 type="email"
@@ -113,8 +127,7 @@ function NewOperator() {
               </label>
               <div className="mt-1">
                 <input
-                  value={dni}
-                  onChange={handleChange}
+                  defaultValue={operator.dni}
                   id="dni"
                   name="dni"
                   type="text"
@@ -130,7 +143,7 @@ function NewOperator() {
               >
                 Sucursal
               </label>
-              <DropDown options={[]} onSelectedBranch={handleOnChangeBranch} />
+              <Dropdown options={[]} onSelectedBranch={handleOnChangeBranch} />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
@@ -143,8 +156,6 @@ function NewOperator() {
               </label>
               <div className="mt-1">
                 <input
-                  value={password}
-                  onChange={handleChange}
                   id="password"
                   name="password"
                   type="password"
@@ -162,8 +173,8 @@ function NewOperator() {
               </label>
               <div className="mt-1">
                 <input
-                  value={password2}
-                  onChange={handleChange}
+                  /* value={password2}
+                  onChange={handleChange} */
                   id="password"
                   name="password2"
                   type="password"
@@ -186,6 +197,6 @@ function NewOperator() {
       </div>
     </section>
   );
-}
+};
 
-export default NewOperator;
+export default UpdateOperator;
