@@ -12,6 +12,7 @@ import Counter from "../commons/Counter";
 import { FormData } from "../commons/FormReservation";
 import { useNavigate } from "react-router-dom";
 import ModalCheck from "../commons/alerts/ModalCheck";
+import CalendarFull from "../Component/CalendarFull";
 
 interface Branch {
   id: number;
@@ -23,7 +24,7 @@ const BookingPanel = () => {
   const [showModal, setShowModal] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<any | null>("");
   const [selectedForm, setSelectedForm] = useState<FormData>({
     fullName: "",
     phone: "",
@@ -38,7 +39,7 @@ const BookingPanel = () => {
     dispatch(
       setBookingData({
         field: "date",
-        data: selectedDate?.toLocaleDateString(),
+        data: selectedDate,
       })
     );
     dispatch(setBookingData({ field: "time", data: selectedForm.time }));
@@ -55,7 +56,7 @@ const BookingPanel = () => {
     setCurrentStep(2);
   };
 
-  const handleOnChangeDate = (date: Date) => {
+  const handleOnChangeDate = (date: any) => {
     setSelectedDate(date);
     setCurrentStep(3);
   };
@@ -200,15 +201,12 @@ const BookingPanel = () => {
               </div>
             </div>
             {selectedBranch && (
-              <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
+              <div className="lg:w-457 lg:ml-3 p-5  rounded-lg bg-white lg:max-h-[23rem]">
                 <div className="flex flex-col items-center">
-                  <TurnoCalendar
-                    onChangeDate={handleOnChangeDate}
-                    className="border-none"
-                  />
+                  <CalendarFull onChangeDate={handleOnChangeDate} />
                   {selectedDate && (
-                    <p className="mt-2">
-                      Fecha seleccionada: {selectedDate.toLocaleDateString()}
+                    <p className="w-457 text-center py-4 font-roboto rounded-b-lg bg-white">
+                      Fecha seleccionada: {selectedDate}
                     </p>
                   )}
                 </div>

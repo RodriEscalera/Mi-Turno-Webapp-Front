@@ -101,10 +101,11 @@ export const Navbar = () => {
                 Crear sucursal
               </button>
             </Link>
-
-            <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 ml-3 rounded sm: ml-1.5">
-              Sucursal
-            </button>
+            <Link to={"/newOperator"}>
+              <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 ml-3 rounded sm: ml-1.5">
+                Crear operador
+              </button>
+            </Link>
           </div>
 
           <button
