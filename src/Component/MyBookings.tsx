@@ -78,8 +78,8 @@ function MyBookings() {
               : booking.map((turno: any, i: any) => (
                   <div className=" p-2 lg:w-full md:w-1/2" key={i}>
                     <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-                      <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
-                        <div className="w-28">
+                      <div className="w-4/5 grid grid-cols-1 lg:flex flex-row justify-between">
+                        <div className="w-1/4">
                           <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
                             Nombre y Apellido
                           </h2>
@@ -87,15 +87,15 @@ function MyBookings() {
                             {turno.fullName}
                           </p>
                         </div>
-                        <div>
+                        <div className="w-1/4">
                           <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
                             Reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.time}
+                            {turno.date} - {turno.time}
                           </p>
                         </div>
-                        <div>
+                        <div className="w-1/4">
                           <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
                             Sucursal
                           </h2>
@@ -103,12 +103,12 @@ function MyBookings() {
                             {turno.branch.name}
                           </p>
                         </div>
-                        <div>
+                        <div className="w-1/4">
                           <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
                             N° de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno._id.slice(0, 12)}...
+                            {turno._id.slice(0, 20)}...
                           </p>
                         </div>
                       </div>

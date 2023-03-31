@@ -21,6 +21,9 @@ import ViewPDF from "./commons/PdfDocument/ViewPDF";
 import UpdateBooking from "./Component/UpdateBooking";
 import UpdateOperator from "./Component/UpdateOperator";
 
+import OperatorBooking from "./Component/OperatorBooking";
+
+
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -62,6 +65,11 @@ function App(): JSX.Element {
             <Route path="/operators" element={<Operators />} />
           </>
         )}
+
+         {user.usertype === "operator" && (
+          <Route path="/operatorBooking" element={<OperatorBooking />} />
+        )} 
+
       </Routes>
     </div>
   );
