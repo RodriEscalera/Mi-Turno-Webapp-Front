@@ -110,7 +110,6 @@ const UpdateBooking = () => {
                   </h1>
                 </div>
 
-               
                 <div className=" lg:flex lg:justify-center w-full sm:flex sm:flex-wrap ">
                   <div className="flex flex-col rounded-lg lg:w-679 lg:h-auto lg:mr-8 lg:py-8 lg:px-10 lg:mb-5 mb-2 p-5 bg-white ">
                     <div className="flex justify-start flex-col mt-2 ">
@@ -118,66 +117,66 @@ const UpdateBooking = () => {
                         Reserva
                       </h1>
                       <div className="space-y-1">
-                  <label
-                    htmlFor="branch"
-                    className="block text-sm text-black font-roboto"
-                  >
-                    Sucursal seleccionada
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="branch"
-                      name="branch"
-                      type="text"
-                      disabled
-                      defaultValue={updateBookingData?.branch?.name}
-                      className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                    />
-                  </div>
-                </div>
+                        <label
+                          htmlFor="branch"
+                          className="block text-sm text-black font-roboto"
+                        >
+                          Sucursal seleccionada
+                        </label>
+                        <div className="mt-1">
+                          <input
+                            id="branch"
+                            name="branch"
+                            type="text"
+                            disabled
+                            defaultValue={updateBookingData?.branch?.name}
+                            className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                          />
+                        </div>
+                      </div>
 
-                <div className="space-y-1">
-                  <label
-                    htmlFor="form"
-                    className="block text-sm text-black font-roboto"
-                  >
-                  Horario seleccionado
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="form"
-                      name="form"
-                      type="text"
-                      disabled
-                      defaultValue={updateBookingData.time}
-                      className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                    />
-                  </div>
-                </div>
+                      <div className="space-y-1">
+                        <label
+                          htmlFor="form"
+                          className="block text-sm text-black font-roboto"
+                        >
+                          Horario seleccionado
+                        </label>
+                        <div className="mt-1">
+                          <input
+                            id="form"
+                            name="form"
+                            type="text"
+                            disabled
+                            defaultValue={updateBookingData.time}
+                            className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                          />
+                        </div>
+                      </div>
 
-                <div className="space-y-1">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm text-black font-roboto"
-                  >
-                    Fecha seleccionada
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="date"
-                      name="date"
-                      type="text"
-                      disabled
-                      defaultValue={updateBookingData.date}
-                      className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                    />
-                  </div>
-                </div>
-<br />
+                      <div className="space-y-1">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm text-black font-roboto"
+                        >
+                          Fecha seleccionada
+                        </label>
+                        <div className="mt-1">
+                          <input
+                            id="date"
+                            name="date"
+                            type="text"
+                            disabled
+                            defaultValue={updateBookingData.date}
+                            className="w-full text-sm p-2.5 text-gray-500 bg-white border rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                          />
+                        </div>
+                      </div>
+                      <br />
                       <>
-                      <h1 className="font-roboto text-lg font-semibold mb-1 text-start ">
-                        Nueva reserva
-                      </h1>
+                        <h1 className="font-roboto text-lg font-semibold mb-1 text-start ">
+                          Nueva reserva
+                        </h1>
                         <label htmlFor="branch-select" className="text-sm">
                           Elige una nueva sucursal
                         </label>
@@ -187,7 +186,6 @@ const UpdateBooking = () => {
                             onSelectedBranch={handleBranchChange}
                           />
                         </div>
-                       
 
                         <div className="flex w-full flex-col mt-5 font-roboto text-sm">
                           <label

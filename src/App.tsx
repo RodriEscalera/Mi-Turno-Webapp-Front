@@ -19,6 +19,7 @@ import ForgotPassword from "./Component/ForgotPassword";
 import Booking from "./Component/Booking";
 import ViewPDF from "./commons/PdfDocument/ViewPDF";
 import UpdateBooking from "./Component/UpdateBooking";
+import UpdateOperator from "./Component/UpdateOperator";
 
 import OperatorBooking from "./Component/OperatorBooking";
 
@@ -48,26 +49,27 @@ function App(): JSX.Element {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/myAccount" element={<MyAccount />} />
-        <Route path="/createBranch" element={<CreateBranch />} />
         <Route path="/myBookings" element={<MyBookings />} />
         <Route path="/bookingPanel" element={<BookingPanel />} />
-        <Route path="/operators" element={<Operators />} />
-        <Route path="/newOperator" element={<NewOperator />} />
         <Route path="/changePassword/*" element={<ChangePassword />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/booking" element={<Booking />} />
-        {/* <Route path="/viewPDF" element={<ViewPDF />} /> */}
         <Route path="/updateBooking/*" element={<UpdateBooking />} />
 
         {user.usertype === "admin" && (
           <>
             <Route path="/createBranch" element={<CreateBranch />} />
             <Route path="/branches" element={<Branches />} />
+            <Route path="/updateOperator/:id" element={<UpdateOperator />} />
+            <Route path="/newOperator" element={<NewOperator />} />
+            <Route path="/operators" element={<Operators />} />
           </>
         )}
+
          {user.usertype === "operator" && (
           <Route path="/operatorBooking" element={<OperatorBooking />} />
         )} 
+
       </Routes>
     </div>
   );
