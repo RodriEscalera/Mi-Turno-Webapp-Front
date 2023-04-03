@@ -7,6 +7,7 @@ const initialState = {
   fullName: null,
   email: null,
   userType: null,
+  branch: null
 };
 
 const reducer = createReducer(initialState, {
