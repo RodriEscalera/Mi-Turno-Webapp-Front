@@ -3,9 +3,15 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useNavigate } from "react-router";
 
 function Operators() {
+  const navigate = useNavigate();
+
   const [operators, setOperators] = useState<any>([]);
+
+  const [idOperator, setIdOperator] = useState("");
+
   const [page, setPage] = useState<number>(0);
   const [hasMore, setHasMore] = useState(true);
   const user = useSelector((state: any) => state.user);
@@ -48,6 +54,11 @@ function Operators() {
     } catch (error) {
       console.log(error);
     }
+  };
+  const editFunction = (id: any) => {
+    setIdOperator(id);
+
+    navigate(`/updateOperator?operatorId=${id}`);
   };
 
   return (
@@ -100,6 +111,7 @@ function Operators() {
                       </div>
                       <div>
                         <button
+                          onClick={() => editFunction(operator._id)}
                           className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
                           type="button"
                         >

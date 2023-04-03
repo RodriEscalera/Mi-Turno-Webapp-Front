@@ -1,67 +1,107 @@
-import { useInput } from "../Hooks/useInput";
-import { useNavigate } from "react-router-dom";
+import Dropdown from "../commons/DropDown";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
-import { useState } from "react";
-import DropDown from "../commons/DropDown";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setOperatorData,
+  updateOperator,
+  setBringOperatorData,
+  initialStateOperatorData,
+} from "../store/updateOperator";
+import useQuery from "../Hooks/useQuery";
 
 interface FormData {
-  name: string;
+  fullName: string;
   dni: number;
-  branch: string;
   email: string;
-  password: string;
-  password2: string;
-  usertype: string;
 }
 interface Branch {
-  id: number;
+  name: string;
 }
 
-function NewOperator() {
-  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
-
+const UpdateOperator = () => {
   const navigate = useNavigate();
-  const { formulario, handleChange } = useInput<FormData>({
-    name: "",
-    branch: "",
+  const dispatch = useDispatch();
+  /* const operatorUpdated = useSelector((state: any) => state.updateOp); */
+  const [inputs, setInputs] = useState<FormData>({
+    fullName: "",
     dni: 0,
     email: "",
-    password: "",
-    password2: "",
-    usertype: "",
   });
 
-  const { name, dni, email, password, password2 } = formulario;
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+  const [operator, setOperator] = useState<any>({});
+  const query = useQuery();
+  const operatorId = query.get("operatorId");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await axios
-        .post("http://localhost:3001/api/admin/createoperator", {
-          token: window.localStorage.getItem("token"),
-          fullName: name,
-          branch: selectedBranch,
-          dni: dni,
-          email: email,
-          password: password,
-          password2: password2,
-        })
-        .then((res) => res.data)
-        .then(() => navigate("/operators"));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const renderBooking = async () => {
+      dispatch(setBringOperatorData(initialStateOperatorData));
+      await getOperator();
+    };
+
+    renderBooking();
+  }, []);
+  console.log(operator, "esto viene del estado operator");
+  /* console.log(operatorUpdated, "esto viene del useSelector"); */
+
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
   };
 
+  const getOperator = async () => {
+    try {
+      const { data } = await axios.post<any>(
+        `http://localhost:3001/api/users/findOne/${operatorId}`,
+        { token: window.localStorage.getItem("token") }
+      );
+      setOperator(data);
+      for (const key in data) {
+        dispatch(setOperatorData({ field: key, data: data[key] }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/admin/updateOperator/${operatorId}`,
+        {
+          token: window.localStorage.getItem("token"),
+          ...updateOperator,
+          user: operatorId,
+          branch: selectedBranch,
+          fullName: inputs.fullName,
+          emaill: inputs.email,
+          dni: inputs.dni,
+        }
+      );
+      dispatch(updateOperator(response.data));
+      console.log(response.data);
+      navigate("/operators");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleChange = async (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+  console.log(inputs, selectedBranch, "esto es lo que escribo");
   return (
     <section>
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
         <h1 className="w-full font-roboto text-xl font-semibold mt-5 mb-5 text-start ">
-          Creación de operadores
+          Editar operador
         </h1>
         <form className="space-y-6 w-full" onSubmit={handleSubmit}>
           <div>
@@ -73,13 +113,13 @@ function NewOperator() {
             </label>
             <div className="mt-1">
               <input
-                value={name}
-                onChange={handleChange}
-                id="name"
-                name="name"
+                defaultValue={operator.fullName}
+                id="fullName"
+                name="fullName"
                 type="text"
                 required
                 className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -93,7 +133,7 @@ function NewOperator() {
             </label>
             <div className="mt-1">
               <input
-                value={email}
+                defaultValue={operator.email}
                 onChange={handleChange}
                 id="email"
                 name="email"
@@ -113,7 +153,7 @@ function NewOperator() {
               </label>
               <div className="mt-1">
                 <input
-                  value={dni}
+                  defaultValue={operator.dni}
                   onChange={handleChange}
                   id="dni"
                   name="dni"
@@ -130,7 +170,7 @@ function NewOperator() {
               >
                 Sucursal
               </label>
-              <DropDown options={[]} onSelectedBranch={handleOnChangeBranch} />
+              <Dropdown options={[]} onSelectedBranch={handleOnChangeBranch} />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
@@ -139,16 +179,14 @@ function NewOperator() {
                 htmlFor="password"
                 className="block text-sm text-black font-roboto"
               >
-                Contraseña
+                Nueva contraseña
               </label>
               <div className="mt-1">
                 <input
-                  value={password}
-                  onChange={handleChange}
                   id="password"
                   name="password"
                   type="password"
-                  required
+                  /* required */
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 />
               </div>
@@ -162,12 +200,10 @@ function NewOperator() {
               </label>
               <div className="mt-1">
                 <input
-                  value={password2}
-                  onChange={handleChange}
                   id="password"
                   name="password2"
                   type="password"
-                  required
+                  /* required */
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 />
               </div>
@@ -186,6 +222,6 @@ function NewOperator() {
       </div>
     </section>
   );
-}
+};
 
-export default NewOperator;
+export default UpdateOperator;
