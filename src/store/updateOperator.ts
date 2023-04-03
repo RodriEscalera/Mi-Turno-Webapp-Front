@@ -5,11 +5,9 @@ export const updateOperator = createAction<IdataOperator>("UPDATE_OPERATOR");
 export const setBringOperatorData = createAction<any>("BRING_BOOKING_DATA");
 
 export const initialStateOperatorData = {
-  id: null,
   fullName: null,
   email: null,
   dni: null,
-  password: null,
   branch: null,
 };
 
