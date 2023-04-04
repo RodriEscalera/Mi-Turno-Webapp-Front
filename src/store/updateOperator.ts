@@ -2,7 +2,7 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setOperatorData = createAction<IdataOperator>("SET_OPERATOR_DATA");
 export const setUpdateOperator = createAction<IdataOperator>("UPDATE_OPERATOR");
-export const setBringOperatorData = createAction<any>("BRING_BOOKING_DATA");
+export const setBringOperatorData = createAction<any>("BRING_OPERATOR_DATA");
 
 export const initialStateOperatorData = {
   fullName: null,
