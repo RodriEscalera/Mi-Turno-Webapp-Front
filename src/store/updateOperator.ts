@@ -1,7 +1,7 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
 export const setOperatorData = createAction<IdataOperator>("SET_OPERATOR_DATA");
-export const updateOperator = createAction<IdataOperator>("UPDATE_OPERATOR");
+export const setUpdateOperator = createAction<IdataOperator>("UPDATE_OPERATOR");
 export const setBringOperatorData = createAction<any>("BRING_BOOKING_DATA");
 
 export const initialStateOperatorData = {
@@ -25,7 +25,7 @@ const reducer = createReducer(initialStateOperatorData, {
       [field]: data,
     };
   },
-  [updateOperator.type]: (state, action) => {
+  [setUpdateOperator.type]: (state, action) => {
     return {
       ...state,
       ...action.payload,

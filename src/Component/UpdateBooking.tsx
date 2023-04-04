@@ -25,7 +25,6 @@ const UpdateBooking = () => {
   const user = useSelector((state: any) => state.user);
   const query = useQuery();
   const bookingId = query.get("bookingId");
-  //const [reservations, setReservations] = useState<any>({});
   const [selectedBranch, setSelectedBranch] = useState<Branch>();
   const [date, setDate] = useState<Date>(new Date());
   const [userForm, setUserForm] = useState<FormData>({

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setOperatorData,
-  updateOperator,
+  setUpdateOperator,
   setBringOperatorData,
   initialStateOperatorData,
 } from "../store/updateOperator";
@@ -23,7 +23,7 @@ interface Branch {
 const UpdateOperator = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  /* const operatorUpdated = useSelector((state: any) => state.updateOp); */
+  const operatorUpdated = useSelector((state: any) => state.updateOp);
   const [inputs, setInputs] = useState<FormData>({
     fullName: "",
     dni: 0,
@@ -72,16 +72,16 @@ const UpdateOperator = () => {
         `http://localhost:3001/api/admin/updateOperator/${operatorId}`,
         {
           token: window.localStorage.getItem("token"),
-          ...updateOperator,
+          ...operatorUpdated,
           user: operatorId,
           branch: selectedBranch,
           fullName: inputs.fullName,
-          emaill: inputs.email,
+          email: inputs.email,
           dni: inputs.dni,
         }
       );
-      dispatch(updateOperator(response.data));
-      console.log(response.data);
+      dispatch(setUpdateOperator(response.data));
+
       navigate("/operators");
     } catch (error) {
       console.error(error);
@@ -96,7 +96,7 @@ const UpdateOperator = () => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
-  console.log(inputs, selectedBranch, "esto es lo que escribo");
+
   return (
     <section>
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
@@ -171,42 +171,6 @@ const UpdateOperator = () => {
                 Sucursal
               </label>
               <Dropdown options={[]} onSelectedBranch={handleOnChangeBranch} />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm text-black font-roboto"
-              >
-                Nueva contraseña
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  /* required */
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                />
-              </div>
-            </div>
-            <div className="space-y-1">
-              <label
-                htmlFor="password"
-                className="block text-sm text-black font-roboto"
-              >
-                Repetir Contraseña
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password2"
-                  type="password"
-                  /* required */
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                />
-              </div>
             </div>
           </div>
 
