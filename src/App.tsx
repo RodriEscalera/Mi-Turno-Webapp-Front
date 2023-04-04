@@ -20,8 +20,9 @@ import Booking from "./Component/Booking";
 import ViewPDF from "./commons/PdfDocument/ViewPDF";
 import UpdateBooking from "./Component/UpdateBooking";
 import UpdateOperator from "./Component/UpdateOperator";
-
 import OperatorBooking from "./Component/OperatorBooking";
+import UpdateBranch from "./Component/UpdateBranch";
+
 
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
@@ -62,6 +63,7 @@ function App(): JSX.Element {
             <Route path="/updateOperator/*" element={<UpdateOperator />} />
             <Route path="/newOperator" element={<NewOperator />} />
             <Route path="/operators" element={<Operators />} />
+            <Route path="/updateBranch/*" element={<UpdateBranch />} />
           </>
         )}
 

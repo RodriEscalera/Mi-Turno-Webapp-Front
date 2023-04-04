@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../store/updateUser";
+import { useNavigate } from "react-router-dom";
 
 type buttonEvent = React.MouseEvent<HTMLButtonElement>;
 
@@ -14,8 +15,8 @@ const MyAccount = () => {
   const [email, setEmail] = useState("");
   const [dni, setDni] = useState("");
   const [phone, setPhone] = useState("");
-
   const [isDisabled, setIsDisabled] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setfullName(user.fullName);
@@ -59,12 +60,27 @@ const MyAccount = () => {
     }
   };
 
+  const handleLogout = (e: buttonEvent) => {
+    e.preventDefault();
+
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <section>
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
-        <h1 className="w-full font-roboto text-xl font-semibold mt-5 mb-5 text-start ">
-          Mi cuenta
-        </h1>
+        <div className="container flex flex-wrap items-center w-full justify-between">
+          <h1 className="w-auto font-roboto text-xl font-semibold mt-5 mb-5 text-start ">
+            Mi cuenta
+          </h1>
+          <button
+            onClick={handleLogout}
+            className="w-auto bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 ml-3 rounded sm: ml-1.5"
+          >
+            Cerrar sesion
+          </button>
+        </div>
         <form className="space-y-6 w-full" onSubmit={handleSubmit}>
           <div>
             <label

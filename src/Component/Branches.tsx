@@ -2,11 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useMediaQuery from "../Hooks/useMediaQuery";
+import { useNavigate } from "react-router";
 
 function Branches() {
   const [branches, setbranches] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState<number>(1);
+  const [idBranch, setIdBranch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     bringFirst();
@@ -34,7 +37,13 @@ function Branches() {
   };
 
   const query = useMediaQuery("(max-width:560px)");
-  //console.log(query);
+
+  const editFunction = (id: any) => {
+    setIdBranch(id);
+
+    navigate(`/updateBranch?branchId=${id}`);
+  };
+
   return (
     <div className="bg-white flex justify-center">
       <div className="h-[30rem] flex items-center flex-col">
@@ -69,7 +78,10 @@ function Branches() {
                           </p>
                         </div>
                         <div>
-                          <button className="bg-violetSecondary text-violet font-semibold font-roboto py-2 px-4 rounded">
+                          <button
+                            className="bg-violetSecondary text-violet font-semibold font-roboto py-2 px-4 rounded"
+                            onClick={() => editFunction(sucursal._id)}
+                          >
                             Editar
                           </button>
                         </div>
@@ -105,7 +117,10 @@ function Branches() {
                           <p className="text-black">{`${sucursal.startingTime} - ${sucursal.closingTime}`}</p>
                         </div>
                         <div>
-                          <button className="bg-violetSecondary text-violet font-semibold font-roboto py-2 px-4 rounded">
+                          <button
+                            className="bg-violetSecondary text-violet font-semibold font-roboto py-2 px-4 rounded"
+                            onClick={() => editFunction(sucursal._id)}
+                          >
                             Editar
                           </button>
                         </div>

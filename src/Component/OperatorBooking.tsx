@@ -3,27 +3,30 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
+
 function OperatorBooking() {
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>([]);
+  const user = useSelector((state: any) => state.user);
 
 
- /*  useEffect(() => {
+ useEffect(() => {
     getBookingOfBranch();
   }, []);
 
   const getBookingOfBranch = async () => {
     try {
       const { data } = await axios.get<any, any>(
-        `http://localhost:3001/api/booking/getBookingsByBranch/${id}`
+        `http://localhost:3001/api/branches/getBookingsByBranch/${user.branch}`
       );
-      setBooking(data);
+     console.log(setBooking(data));
+      ;
     } catch (error) {
       console.log(error);
     }
   };
-
- */
+ 
+ 
   return (
     <>
       <section className="h-screen w-full p-5">
