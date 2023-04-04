@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import useQuery from "../Hooks/useQuery";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useState } from "react";
 type FormEvent = React.FormEvent<HTMLFormElement>;
 type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
 
-function CreateBranch(): JSX.Element {
+const UpdateBranch = () => {
+  const [branchInfo, setBranchInfo] = useState({});
   const [inputs, setInputs] = useState({
     nombre: "",
     email: "",
@@ -13,12 +14,12 @@ function CreateBranch(): JSX.Element {
     horarioDeInicio: "",
     horarioDeCierre: "",
   });
+  const query = useQuery();
+  const branchId = query.get("branchId");
 
   const handleInputs = (e: any) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: ButtonEvent | FormEvent) => {
     e.preventDefault();
@@ -34,12 +35,28 @@ function CreateBranch(): JSX.Element {
           startingTime: inputs.horarioDeInicio,
         }
       );
-      navigate("/branches");
     } catch (err) {
       console.log(err);
     }
   };
-  // console.log(inputs);
+
+  // const getBranch = async () => {
+  //   try {
+  //     const { data } = await axios.post<any>(
+  //       `http://localhost:3001/api/branches/branches/${branchId}`,
+  //       { token: window.localStorage.getItem("token") }
+  //     );
+  //     setOperator(data);
+  //     for (const key in data) {
+  //       dispatch(setOperatorData({ field: key, data: data[key] }));
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  console.log(branchId);
+
   return (
     <div
       style={{ width: "100%", height: "100vh" }}
@@ -146,6 +163,6 @@ function CreateBranch(): JSX.Element {
       </form>
     </div>
   );
-}
+};
 
-export default CreateBranch;
+export default UpdateBranch;
