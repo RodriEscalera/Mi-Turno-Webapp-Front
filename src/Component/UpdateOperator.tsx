@@ -1,28 +1,40 @@
 import Dropdown from "../commons/DropDown";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setOperatorData,
-  updateOperator,
+  setUpdateOperator,
   setBringOperatorData,
   initialStateOperatorData,
 } from "../store/updateOperator";
 import useQuery from "../Hooks/useQuery";
 
+interface FormData {
+  fullName: string;
+  dni: number;
+  email: string;
+}
 interface Branch {
-  id: number;
+  name: string;
 }
 
 const UpdateOperator = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.user);
-  const updateOperator = useSelector((state: any) => state.updateOp);
-  const { id } = useParams();
-  const [operator, setOperator] = useState<any>([]);
+  const operatorUpdated = useSelector((state: any) => state.updateOp);
+  const [inputs, setInputs] = useState<FormData>({
+    fullName: "",
+    dni: 0,
+    email: "",
+  });
 
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+  const [operator, setOperator] = useState<any>({});
+  const query = useQuery();
+  const operatorId = query.get("operatorId");
+
   useEffect(() => {
     const renderBooking = async () => {
       dispatch(setBringOperatorData(initialStateOperatorData));
@@ -31,6 +43,8 @@ const UpdateOperator = () => {
 
     renderBooking();
   }, []);
+  console.log(operator, "esto viene del estado operator");
+  /* console.log(operatorUpdated, "esto viene del useSelector"); */
 
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
@@ -39,7 +53,7 @@ const UpdateOperator = () => {
   const getOperator = async () => {
     try {
       const { data } = await axios.post<any>(
-        `http://localhost:3001/api/users/findOne/${id}`,
+        `http://localhost:3001/api/users/findOne/${operatorId}`,
         { token: window.localStorage.getItem("token") }
       );
       setOperator(data);
@@ -55,24 +69,34 @@ const UpdateOperator = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3001/api/admin/updateOperator/${id}`,
+        `http://localhost:3001/api/admin/updateOperator/${operatorId}`,
         {
           token: window.localStorage.getItem("token"),
-          ...updateOperator,
-          user: user.id,
+          ...operatorUpdated,
+          user: operatorId,
           branch: selectedBranch,
-          fullName: user.fullName,
-          emaill: user.email,
-          dni: user.dni,
-          password: user.password,
+          fullName: inputs.fullName,
+          email: inputs.email,
+          dni: inputs.dni,
         }
       );
-      dispatch(updateOperator(response.data));
+      dispatch(setUpdateOperator(response.data));
+
+      navigate("/operators");
     } catch (error) {
       console.error(error);
     }
   };
-  console.log(operator.password, "ESTO");
+  const handleChange = async (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
   return (
     <section>
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
@@ -90,11 +114,12 @@ const UpdateOperator = () => {
             <div className="mt-1">
               <input
                 defaultValue={operator.fullName}
-                id="name"
-                name="name"
+                id="fullName"
+                name="fullName"
                 type="text"
                 required
                 className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -109,6 +134,7 @@ const UpdateOperator = () => {
             <div className="mt-1">
               <input
                 defaultValue={operator.email}
+                onChange={handleChange}
                 id="email"
                 name="email"
                 type="email"
@@ -128,6 +154,7 @@ const UpdateOperator = () => {
               <div className="mt-1">
                 <input
                   defaultValue={operator.dni}
+                  onChange={handleChange}
                   id="dni"
                   name="dni"
                   type="text"
@@ -144,44 +171,6 @@ const UpdateOperator = () => {
                 Sucursal
               </label>
               <Dropdown options={[]} onSelectedBranch={handleOnChangeBranch} />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm text-black font-roboto"
-              >
-                Contraseña
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                />
-              </div>
-            </div>
-            <div className="space-y-1">
-              <label
-                htmlFor="password"
-                className="block text-sm text-black font-roboto"
-              >
-                Repetir Contraseña
-              </label>
-              <div className="mt-1">
-                <input
-                  /* value={password2}
-                  onChange={handleChange} */
-                  id="password"
-                  name="password2"
-                  type="password"
-                  required
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
-                />
-              </div>
             </div>
           </div>
 

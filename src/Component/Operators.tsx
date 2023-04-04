@@ -58,9 +58,8 @@ function Operators() {
   const editFunction = (id: any) => {
     setIdOperator(id);
 
-    navigate(`/updateOperator/${id}`);
+    navigate(`/updateOperator?operatorId=${id}`);
   };
-  console.log(idOperator);
 
   return (
     <section className="h-screen w-full p-5">
@@ -104,20 +103,14 @@ function Operators() {
                             Sucursal
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {operator.branch.map(
-                              (nameBranch: any) => nameBranch.name
-                            )}
+                            {operators[i]?.branch?.name}
                           </p>
                         </div>
                       </div>
                       <div>
                         <button
-
                           onClick={() => editFunction(operator._id)}
-                          
-
                           className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-
                           type="button"
                         >
                           Editar
