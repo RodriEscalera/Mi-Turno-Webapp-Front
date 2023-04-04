@@ -23,6 +23,7 @@ import UpdateOperator from "./Component/UpdateOperator";
 import OperatorBooking from "./Component/OperatorBooking";
 import UpdateBranch from "./Component/UpdateBranch";
 
+
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ function App(): JSX.Element {
           <>
             <Route path="/createBranch" element={<CreateBranch />} />
             <Route path="/branches" element={<Branches />} />
-            <Route path="/updateOperator/:id" element={<UpdateOperator />} />
+            <Route path="/updateOperator/*" element={<UpdateOperator />} />
             <Route path="/newOperator" element={<NewOperator />} />
             <Route path="/operators" element={<Operators />} />
             <Route path="/updateBranch/*" element={<UpdateBranch />} />
