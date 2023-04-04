@@ -36,10 +36,10 @@ function OperatorBooking() {
           </h1>
 
           <div className="lg:flex lg:flex-wrap">
-            {/* {booking.length === 0
+             {booking.length === 0
               ? null
-              : booking.map((turno: any, i: any) => ( */}
-                  <div className=" p-2 lg:w-full md:w-1/2" /* key={i} */>
+              : booking.map((turno: any, i: any) => ( 
+                  <div className=" p-2 lg:w-full md:w-1/2" key={i} >
                     <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
                       <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
                         <div className="w-28">
@@ -47,7 +47,7 @@ function OperatorBooking() {
                             Nombre y Apellido
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {/* {turno.fullName} */}
+                            {turno.fullName}
                           </p>
                         </div>
                         <div>
@@ -55,7 +55,7 @@ function OperatorBooking() {
                             Hora de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                           {/*  {turno.time} */}
+                            {turno.time}
                           </p>
                         </div>
                         <div>
@@ -63,7 +63,7 @@ function OperatorBooking() {
                             Día de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {/* {turno.date} */}
+                            {turno.date}
                           </p>
                         </div>
                         <div>
@@ -71,7 +71,7 @@ function OperatorBooking() {
                             N° de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                           {/*  {turno._id.slice(0, 12)}... */}
+                            {turno._id.slice(0, 12)}...
                           </p>
                         </div>
                       </div>
@@ -86,7 +86,7 @@ function OperatorBooking() {
                       </div>
                     </div>
                   </div>
-              {/*   ))} */}
+                 ))} 
           </div>
         </div>
       </section>

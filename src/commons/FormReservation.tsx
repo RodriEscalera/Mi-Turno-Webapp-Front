@@ -90,8 +90,6 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
     onReservationForm(form);
   }, [form]);
 
-  console.log(horariosDefault);
-
   return (
     <div className="relative w-full">
       <div>

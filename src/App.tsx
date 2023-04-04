@@ -22,7 +22,6 @@ import UpdateBooking from "./Component/UpdateBooking";
 
 import OperatorBooking from "./Component/OperatorBooking";
 
-
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -58,6 +57,7 @@ function App(): JSX.Element {
         <Route path="/booking" element={<Booking />} />
         {/* <Route path="/viewPDF" element={<ViewPDF />} /> */}
         <Route path="/updateBooking/*" element={<UpdateBooking />} />
+        <Route path="/operatorBooking" element={<OperatorBooking />} />
 
         {user.usertype === "admin" && (
           <>
@@ -65,9 +65,9 @@ function App(): JSX.Element {
             <Route path="/branches" element={<Branches />} />
           </>
         )}
-         {user.usertype === "operator" && (
+        {user.usertype === "operator" && (
           <Route path="/operatorBooking" element={<OperatorBooking />} />
-        )} 
+        )}
       </Routes>
     </div>
   );
