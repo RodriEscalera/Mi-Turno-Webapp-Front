@@ -103,9 +103,7 @@ function Operators() {
                             Sucursal
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {operator.branch.map(
-                              (nameBranch: any) => nameBranch.name
-                            )}
+                            {operators[i]?.branch?.name}
                           </p>
                         </div>
                       </div>
