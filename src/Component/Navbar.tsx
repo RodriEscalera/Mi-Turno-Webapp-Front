@@ -13,11 +13,19 @@ export const Navbar = () => {
     <nav className="shadow-nav lg:py-4 lg:px-24 border-gray-200 rounded white:bg-gray-800 white:border-gray-700 sm: py-3 px-5 bg-white">
       {user.usertype !== "admin" ? (
         <div className="container flex flex-wrap items-center justify-between mx-auto">
-          <Link to={!user.id ? "/login" : "/bookingPanel"}>
-            <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded">
-              Reservar
-            </button>
-          </Link>
+          {user.usertype !== "operator" ? (
+            <Link to={!user.id ? "/login" : "/bookingPanel"}>
+              <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded">
+                Reservar
+              </button>
+            </Link>
+          ) : (
+            <Link to={!user.id ? "/login" : "/bookingPanel"}>
+              <button className="hidden bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded">
+                Reservar
+              </button>
+            </Link>
+          )}
 
           <button
             data-collapse-toggle="navbar-solid-bg"
@@ -49,17 +57,31 @@ export const Navbar = () => {
               {user.id ? (
                 <>
                   <li className="bg-white sm:py-2">
-                    <Link
-                      to="/myBookings"
-                      className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
-                    >
-                      Mis Reservas
-                      <img
-                        className="pl-1 hover:text-cruceHover"
-                        src={misReservas}
-                        alt=""
-                      />
-                    </Link>
+                    {user.usertype === "operator" ? (
+                      <Link
+                        to="/operatorBooking"
+                        className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                      >
+                        Reservas
+                        <img
+                          className="pl-1 hover:text-cruceHover"
+                          src={misReservas}
+                          alt=""
+                        />
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/myBookings"
+                        className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                      >
+                        Mis Reservas
+                        <img
+                          className="pl-1 hover:text-cruceHover"
+                          src={misReservas}
+                          alt=""
+                        />
+                      </Link>
+                    )}
                   </li>
                   <li className="bg-white sm:py-2">
                     <Link
