@@ -3,30 +3,28 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-
 function OperatorBooking() {
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>([]);
   const user = useSelector((state: any) => state.user);
-
-
- useEffect(() => {
+  console.log(user.branch);
+ 
+  useEffect(() => {
     getBookingOfBranch();
-  }, []);
+  }, [user.branch]);
 
   const getBookingOfBranch = async () => {
     try {
-      const { data } = await axios.get<any, any>(
+      const { data } = await axios.get<any>(
         `http://localhost:3001/api/branches/getBookingsByBranch/${user.branch}`
       );
-     console.log(setBooking(data));
-      ;
+      setBooking(data);
+      console.log("esta es la data:", data);
     } catch (error) {
       console.log(error);
     }
   };
- 
- 
+
   return (
     <>
       <section className="h-screen w-full p-5">
@@ -36,57 +34,45 @@ function OperatorBooking() {
           </h1>
 
           <div className="lg:flex lg:flex-wrap">
-             {booking.length === 0
+            {booking?.bookings?.length === 0
               ? null
-              : booking.map((turno: any, i: any) => ( 
-                  <div className=" p-2 lg:w-full md:w-1/2" key={i} >
-                    <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-                      <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
-                        <div className="w-28">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Nombre y Apellido
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.fullName}
-                          </p>
-                        </div>
-                        <div>
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Hora de la reserva
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.time}
-                          </p>
-                        </div>
-                        <div>
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Día de la reserva
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.date}
-                          </p>
-                        </div>
-                        <div>
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            N° de la reserva
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno._id.slice(0, 12)}...
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex space-x-1">
-                        <button
-                          className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          
-                        >
-                          Confirmación
-                        </button>
-                     
-                      </div>
-                    </div>
+              : booking.bookings?.map((turno: any, i: any) => ( 
+            <div className=" p-2 lg:w-full md:w-1/2" key={i}>
+              <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
+                <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
+                  <div className="w-28">
+                    <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                      Nombre y Apellido
+                    </h2>
+                    <p className="text-sm font-roboto font-semibold leading-4">{turno.fullName}</p>
                   </div>
-                 ))} 
+                  <div>
+                    <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                      Hora de la reserva
+                    </h2>
+                    <p className="text-sm font-roboto font-semibold leading-4">{turno.time}</p>
+                  </div>
+                  <div>
+                    <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                      Día de la reserva
+                    </h2>
+                    <p className="text-sm font-roboto font-semibold leading-4">{turno.date}</p>
+                  </div>
+                  <div>
+                    <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                      N° de la reserva
+                    </h2>
+                    <p className="text-sm font-roboto font-semibold leading-4">{turno._id.slice(0, 7)}...</p>
+                  </div>
+                </div>
+                <div className="flex space-x-1">
+                  <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center">
+                    Confirmación
+                  </button>
+                </div>
+              </div>
+            </div>
+            ))}  
           </div>
         </div>
       </section>
