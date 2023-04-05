@@ -84,6 +84,8 @@ function Login() {
     });
   };
 
+  console.log(email.toLowerCase());
+
   return (
     <>
       <section className="h-screen">
