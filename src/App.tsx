@@ -23,7 +23,6 @@ import UpdateOperator from "./Component/UpdateOperator";
 import OperatorBooking from "./Component/OperatorBooking";
 import UpdateBranch from "./Component/UpdateBranch";
 
-
 function App(): JSX.Element {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
