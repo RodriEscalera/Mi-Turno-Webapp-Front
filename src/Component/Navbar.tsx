@@ -85,7 +85,7 @@ export const Navbar = () => {
                   </li>
                   <li className="bg-white sm:py-2">
                     <Link
-                      to="/myAccount"
+                      to={!user.id ? "/login" : "/myAccount"}
                       className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
                     >
                       Mi Cuenta
