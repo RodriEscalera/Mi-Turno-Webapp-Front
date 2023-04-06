@@ -8,6 +8,7 @@ import DocumentPDF from "../commons/PdfDocument/DocumentPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import DeleteBooking from "../commons/alerts/DeleteBooking";
 import { useNavigate } from "react-router";
+import vacio from "../assets/image/void.png";
 
 function MyBookings() {
   const navigate = useNavigate();
@@ -53,6 +54,9 @@ function MyBookings() {
   const asyncFunctionCloseModal = () => {
     return setShowModal(0);
   };
+
+  console.log(booking);
+
   return (
     <>
       <div className="absolute hidden">
@@ -73,77 +77,81 @@ function MyBookings() {
           </h1>
 
           <div className="lg:flex lg:flex-wrap">
-            {booking.length === 0
-              ? null
-              : booking.map((turno: any, i: any) => (
-                  <div className=" p-2 lg:w-full md:w-1/2" key={i}>
-                    <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-                      <div className="w-4/5 grid grid-cols-1 lg:flex flex-row justify-between">
-                        <div className="w-1/4">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Nombre y Apellido
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.fullName}
-                          </p>
-                        </div>
-                        <div className="w-1/4">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Reserva
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.date} - {turno.time}
-                          </p>
-                        </div>
-                        <div className="w-1/4">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Sucursal
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno.branch.name}
-                          </p>
-                        </div>
-                        <div className="w-1/4">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            N° de la reserva
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {turno._id.slice(0, 20)}...
-                          </p>
-                        </div>
+            {booking.length === 0 ? (
+              <div className="flex w-full items-center font-roboto text-2xl justify-center">
+                <div className="mt-16">
+                  <img className=" w-60 h-80 object-cover" src={vacio} alt="" />{" "}
+                </div>
+                <p className="text">Aún no tienes reservas</p>
+              </div>
+            ) : (
+              booking.map((turno: any, i: any) => (
+                <div className=" p-2 lg:w-full md:w-1/2" key={i}>
+                  <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
+                    <div className="w-4/5 grid grid-cols-1 lg:flex flex-row justify-between">
+                      <div className="w-1/4">
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Nombre y Apellido
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {turno.fullName}
+                        </p>
                       </div>
-                      <div className="flex space-x-1">
-                        <button
-                          className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          onClick={() => editFunction(booking[i]._id)}
-                        >
-                          Editar
-                        </button>
-
-                        <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center">
-                          <PDFDownloadLink
-                            fileName={`${turno.fullName}_turno.pdf`}
-                            document={
-                              <DocumentPDF
-                                id={`qr_${turno._id}`}
-                                data={turno}
-                              />
-                            }
-                          >
-                            <img src={download} alt="" />
-                          </PDFDownloadLink>
-                        </button>
-
-                        <button
-                          className="bg-red-300 hover:bg-red-400 text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          onClick={() => deleteFunction(booking[i]._id)}
-                        >
-                          <img src={bin} alt="" />
-                        </button>
+                      <div className="w-1/4">
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Reserva
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {turno.date} - {turno.time}
+                        </p>
+                      </div>
+                      <div className="w-1/4">
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Sucursal
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {turno.branch.name}
+                        </p>
+                      </div>
+                      <div className="w-1/4">
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          N° de la reserva
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {turno._id.slice(0, 20)}...
+                        </p>
                       </div>
                     </div>
+                    <div className="flex space-x-1">
+                      <button
+                        className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
+                        onClick={() => editFunction(booking[i]._id)}
+                      >
+                        Editar
+                      </button>
+
+                      <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center">
+                        <PDFDownloadLink
+                          fileName={`${turno.fullName}_turno.pdf`}
+                          document={
+                            <DocumentPDF id={`qr_${turno._id}`} data={turno} />
+                          }
+                        >
+                          <img src={download} alt="" />
+                        </PDFDownloadLink>
+                      </button>
+
+                      <button
+                        className="bg-red-300 hover:bg-red-400 text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
+                        onClick={() => deleteFunction(booking[i]._id)}
+                      >
+                        <img src={bin} alt="" />
+                      </button>
+                    </div>
                   </div>
-                ))}
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>

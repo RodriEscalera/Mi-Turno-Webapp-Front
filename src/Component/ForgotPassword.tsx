@@ -46,6 +46,7 @@ function ForgotPassword() {
             Email
           </label>
           <input
+            required
             onChange={handleInput}
             type="email"
             className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
@@ -56,11 +57,14 @@ function ForgotPassword() {
             type="submit"
             className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-violet-500 my-5"
           >
-            Ingresar
+            Enviar
           </button>
         </form>
       </div>
     </section>
+
+    // --------> Version sin estilos
+    //
     // <div
     //   className="w-full h-[100vh] flex
     // justify-center items-center"

@@ -58,7 +58,7 @@ function NewOperator() {
   };
 
   return (
-    <section>
+    <section className="h-screen">
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
         <h1 className="w-full font-roboto text-xl font-semibold mt-5 mb-5 text-start ">
           Creación de operadores
@@ -113,7 +113,7 @@ function NewOperator() {
               </label>
               <div className="mt-1">
                 <input
-                  value={dni}
+                  value={dni === 0 ? "" : dni}
                   onChange={handleChange}
                   id="dni"
                   name="dni"

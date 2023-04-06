@@ -62,7 +62,7 @@ function Operators() {
   };
 
   return (
-    <section className="h-screen w-full p-5">
+    <section className="bg-gray-100 h-screen w-full p-5">
       <div className="max-w-6xl mx-auto">
         <h1 className="font-roboto text-xl font-semibold p-2 mt-3 mb-3 text-start ">
           Operadores

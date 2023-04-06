@@ -35,10 +35,10 @@ const Dropdown = (props: DropDownProps) => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="w-full">
       <select
         required
-        className="w-full p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
+        className="w-full h-[3.07rem] p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
         onChange={handleSelect}
       >
         <option selected></option>
