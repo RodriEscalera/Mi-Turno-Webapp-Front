@@ -2,31 +2,53 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-
+import ConfirmedReservation from "../commons/alerts/ConfirmedReservation";
 
 function OperatorBooking() {
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>([]);
+  const [idBooking, setIdBooking] = useState("");
+  const [showModal, setShowModal] = useState(0);
   const user = useSelector((state: any) => state.user);
-
-
- useEffect(() => {
-    getBookingOfBranch();
-  }, []);
+  const [render, setRender] = useState(false);
+  
+  useEffect(() => {
+    const renderBookingOfBranch = async () => {
+      await getBookingOfBranch();
+    };
+    setRender(true);
+    renderBookingOfBranch();
+  }, [user.branch]);
 
   const getBookingOfBranch = async () => {
     try {
-      const { data } = await axios.get<any, any>(
+      const { data } = await axios.get<any>(
         `http://localhost:3001/api/branches/getBookingsByBranch/${user.branch}`
       );
-     console.log(setBooking(data));
-      ;
+      setBooking(data);
+      console.log("esta es la data:", data);
     } catch (error) {
       console.log(error);
     }
   };
- 
- 
+
+  const updateBookingAvailability = async (id: any) => {
+    setIdBooking(id);
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/booking/updateBookingAvailability/${id}`
+      );
+      console.log(response.data.message);
+      setShowModal(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const asyncFunctionCloseModal = () => {
+    return setShowModal(0);
+  };
+
   return (
     <>
       <section className="h-screen w-full p-5">
@@ -36,10 +58,10 @@ function OperatorBooking() {
           </h1>
 
           <div className="lg:flex lg:flex-wrap">
-            {/* {booking.length === 0
+            {booking?.bookings?.length === 0
               ? null
-              : booking.map((turno: any, i: any) => ( */}
-                  <div className=" p-2 lg:w-full md:w-1/2" /* key={i} */>
+              : booking.bookings?.map((turno: any, i: any) => (
+                  <div className=" p-2 lg:w-full md:w-1/2" key={i}>
                     <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
                       <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
                         <div className="w-28">
@@ -47,7 +69,7 @@ function OperatorBooking() {
                             Nombre y Apellido
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {/* {turno.fullName} */}
+                            {turno.fullName}
                           </p>
                         </div>
                         <div>
@@ -55,7 +77,7 @@ function OperatorBooking() {
                             Hora de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                           {/*  {turno.time} */}
+                            {turno.time}
                           </p>
                         </div>
                         <div>
@@ -63,7 +85,7 @@ function OperatorBooking() {
                             Día de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                            {/* {turno.date} */}
+                            {turno.date}
                           </p>
                         </div>
                         <div>
@@ -71,25 +93,31 @@ function OperatorBooking() {
                             N° de la reserva
                           </h2>
                           <p className="text-sm font-roboto font-semibold leading-4">
-                           {/*  {turno._id.slice(0, 12)}... */}
+                            {turno._id.slice(0, 7)}...
                           </p>
                         </div>
                       </div>
                       <div className="flex space-x-1">
                         <button
                           className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          
+                          onClick={() =>
+                            updateBookingAvailability(booking?.bookings[i]?._id)
+                          }
                         >
                           Confirmación
                         </button>
-                     
                       </div>
                     </div>
                   </div>
-              {/*   ))} */}
+                ))}
           </div>
         </div>
       </section>
+      {showModal === 1 ? (
+        <ConfirmedReservation
+          asyncFunctionCloseModal={asyncFunctionCloseModal}
+        />
+      ) : null}
     </>
   );
 }

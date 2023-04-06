@@ -9,6 +9,7 @@ import ojitoActivo from "../assets/icons/openEye2.svg";
 import { Link } from "react-router-dom";
 import UnsuccessLogin from "../commons/alerts/UnsuccessLogin";
 import SuccessLogin from "../commons/alerts/SuccessLogin";
+import { useSelector } from "react-redux";
 
 interface FormData {
   email: string;
@@ -21,6 +22,7 @@ function Login() {
   const [showModal, setShowModal] = useState(0);
   const [isOpenErr, setIsOpenErr] = useState(false);
   const [buttonIsAble, setButtonIsAble] = useState(false);
+  const user = useSelector((state: any) => state.user);
 
   const navigate = useNavigate();
   const { formulario, handleChange } = useInput<FormData>({
@@ -80,7 +82,13 @@ function Login() {
       setShowModal(1);
       setTimeout(resolve, 3000);
     }).then(() => {
-      navigate("/");
+
+      if (user.usertype === "user" || user.usertype === "admin" ) {
+        navigate("/");
+      } else if (user.usertype === "operator") {
+        navigate("/operatorBooking");
+      } 
+
     });
   };
 

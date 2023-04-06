@@ -78,7 +78,7 @@ const MyAccount = () => {
             onClick={handleLogout}
             className="w-auto bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 ml-3 rounded sm: ml-1.5"
           >
-            Cerrar sesion
+            Cerrar sesión
           </button>
         </div>
         <form className="space-y-6 w-full" onSubmit={handleSubmit}>
