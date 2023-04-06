@@ -72,7 +72,7 @@ const UpdateBranch = () => {
           token: window.localStorage.getItem("token"),
           ...branchUpdated,
           idBranch: branchId,
-          name: inputs.name,
+          fullName: inputs.name,
           email: inputs.email,
           phone: inputs.phone,
           startingTime: inputs.startingTime,
@@ -105,17 +105,17 @@ const UpdateBranch = () => {
           </h1>
           <div className="flex-col flex mt-4">
             <label
-              htmlFor="nombre"
+              htmlFor="name"
               className="block text-sm text-black font-roboto"
             >
               Nombre
             </label>
             <input
               defaultValue={branchInfo.name}
-              name="nombre"
+              name="name"
               className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
               type="text"
-              id="nombre"
+              id="name"
               onChange={handleChange}
             />
           </div>
@@ -138,7 +138,7 @@ const UpdateBranch = () => {
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             <div className="">
               <label
-                htmlFor="telefono"
+                htmlFor="phone"
                 className="block text-sm text-black font-roboto"
               >
                 Teléfono
@@ -146,15 +146,15 @@ const UpdateBranch = () => {
               <input
                 defaultValue={branchInfo.phone}
                 onChange={handleChange}
-                name="telefono"
+                name="phone"
                 className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 type="text"
-                id="telefono"
+                id="phone"
               />
             </div>
             <div className="">
               <label
-                htmlFor="capacidad-maxima"
+                htmlFor="maxCapacity"
                 className="block text-sm text-black font-roboto"
               >
                 Capacidad Máxima
@@ -162,7 +162,7 @@ const UpdateBranch = () => {
               <div className="mt-1 space-y-1">
                 <select
                   onChange={handleChange}
-                  name="capacidadMaxima"
+                  name="maxCapacity"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
                   <option value="12">12</option>
@@ -177,7 +177,7 @@ const UpdateBranch = () => {
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             <div>
               <label
-                htmlFor="horario-inicio"
+                htmlFor="startingTime"
                 className="block text-sm text-black font-roboto"
               >
                 Horario de Inicio
@@ -185,7 +185,8 @@ const UpdateBranch = () => {
               <div className="mt-1">
                 <select
                   onChange={handleChange}
-                  name="horarioDeInicio"
+                  id="startingTime"
+                  name="startingTime"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
                   <option value="-">{branchInfo.startingTime}</option>
@@ -200,7 +201,7 @@ const UpdateBranch = () => {
 
             <div className="space-y-1">
               <label
-                htmlFor="horario-cierre"
+                htmlFor="closingTime"
                 className="block text-sm text-black font-roboto"
               >
                 Horario de Cierre
@@ -209,7 +210,8 @@ const UpdateBranch = () => {
               <div className="mt-1">
                 <select
                   onChange={handleChange}
-                  name="horarioDeCierre"
+                  id="closingTime"
+                  name="closingTime"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
                   <option value="-">{branchInfo.closingTime}</option>
@@ -231,110 +233,6 @@ const UpdateBranch = () => {
         </form>
       </div>
     </section>
-    // <div
-    //   style={{ width: "100%", height: "100vh" }}
-    //   className="flex justify-center items-center"
-    // >
-    //   <form
-    //     onSubmit={handleSubmit}
-    //     className="w-cb h-cb max-[768px]:w-cbmd max-[768px]:h-cbmd shadow-rl bg-white rounded-lg p-7"
-    //   >
-    //     <h1 className="font-roboto text-xl font-bold">Editar sucursal</h1>
-    //     <div className="flex-col flex mt-4">
-    //       <label htmlFor="nombre">Nombre</label>
-    //       <input
-    //         defaultValue={branchInfo.name}
-    //         name="name"
-    //         className="border-gray-300 rounded-lg focus:border-purple-500 border-2 focus:ring-0"
-    //         type="text"
-    //         id="nombre"
-    //         onChange={handleChange}
-    //       />
-    //     </div>
-    //     <div className="flex-col flex mt-4">
-    //       <label htmlFor="email">Correo Electrónico</label>
-    //       <input
-    //         defaultValue={branchInfo.email}
-    //         name="email"
-    //         onChange={handleChange}
-    //         className="border-gray-300 rounded-lg focus:border-purple-500 border-2 focus:ring-0"
-    //         type="text"
-    //         id="email"
-    //       />
-    //     </div>
-    //     <div className="flex justify-between mt-4 max-[768px]:flex-col">
-    //       <div className="flex flex-col">
-    //         <label htmlFor="telefono">Teléfono</label>
-    //         <input
-    //           defaultValue={branchInfo.phone}
-    //           name="phone"
-    //           onChange={handleChange}
-    //           className="border-gray-300 rounded-lg focus:border-purple-500 border-2 focus:ring-0 md:w-96 max-[768px]:w-full"
-    //           type="text"
-    //           id="telefono"
-    //         />
-    //       </div>
-    //       <div className="flex flex-col justify-center max-[640px]:mt-4">
-    //         <label htmlFor="capacidad-maxima">Capacidad Máxima</label>
-    //         <div className="flex flex-col items-center justify-center">
-    //           <select
-    //             name="maxCapacity"
-    //             onChange={handleChange}
-    //             className="border-gray-300 md:w-96 max-[768px]:w-full p-2 rounded-lg focus:border-purple-500 border-2 focus:ring-0 "
-    //           >
-    //             <option value="12">12</option>
-    //             <option value="24">24</option>
-    //           </select>
-    //         </div>
-    //       </div>
-    //     </div>
-
-    //     <div className="flex justify-between max-[640px]:mt-4 max-[768px]:flex-col mt-2">
-    //       <div className="flex flex-col justify-center">
-    //         <label htmlFor="horario-inicio">Horario de Inicio</label>
-    //         <div className="flex flex-col items-center justify-center">
-    //           <select
-    //             name="startingTime"
-    //             onChange={handleChange}
-    //             className="text-gray-400 border-gray-300 md:w-96 max-[768px]:w-full p-2 rounded-lg focus:border-purple-500 border-2 focus:ring-0 "
-    //           >
-    //             <option value="-">{branchInfo.startingTime}</option>
-
-    //             <option value="07:00">07:00</option>
-    //             <option value="08:00">08:00</option>
-    //             <option value="09:00">09:00</option>
-    //             <option value="10:00">10:00</option>
-    //           </select>
-    //         </div>
-    //       </div>
-
-    //       <div className="flex flex-col justify-center max-[640px]:mt-4 ">
-    //         <label htmlFor="horario-cierre">Horario de Cierre</label>
-
-    //         <div className="flex flex-col items-center justify-center">
-    //           <select
-    //             name="closingTime"
-    //             onChange={handleChange}
-    //             className="text-gray-400 border-gray-300 md:w-96 max-[768px]:w-full p-2 rounded-lg focus:border-purple-500 border-2 focus:ring-0 "
-    //           >
-    //             <option value="-">{branchInfo.closingTime}</option>
-
-    //             <option value="18:00">18:00</option>
-    //             <option value="19:00">19:00</option>
-    //             <option value="20:00">20:00</option>
-    //             <option value="21:00">21:00</option>
-    //           </select>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <button
-    //       type="submit"
-    //       className="mt-4 flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 mb-5 "
-    //     >
-    //       Enviar
-    //     </button>
-    //   </form>
-    // </div>
   );
 };
 
