@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Calendar from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "../commons/DropDown";
 import FormReservation, { FormData } from "../commons/FormReservation";
@@ -12,6 +11,7 @@ import {
 } from "../store/bookingData";
 import useQuery from "../Hooks/useQuery";
 import ModalUpdated from "../commons/alerts/ModalUpdated";
+import CalendarFull from "./CalendarFull";
 
 interface Branch {
   name: string;
@@ -26,7 +26,7 @@ const UpdateBooking = () => {
   const query = useQuery();
   const bookingId = query.get("bookingId");
   const [selectedBranch, setSelectedBranch] = useState<Branch>();
-  const [date, setDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [userForm, setUserForm] = useState<FormData>({
     time: "",
     fullName: "",
@@ -64,7 +64,7 @@ const UpdateBooking = () => {
   };
 
   const handleDateChange = (newDate: Date) => {
-    setDate(newDate);
+    setSelectedDate(newDate);
   };
 
   const handleUserChange = (formUser: FormData) => {
@@ -81,7 +81,7 @@ const UpdateBooking = () => {
           ...updateBookingData,
           user: user.id,
           branch: selectedBranch,
-          date: date?.toLocaleDateString(),
+          date: selectedDate,
           time: userForm.time,
           fullName: userForm.fullName,
           email: userForm.email,
@@ -206,14 +206,12 @@ const UpdateBooking = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[21rem]">
+                  <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[25rem]">
                     <div className="flex flex-col items-center">
                       <label htmlFor="calendar">Selecciona un nuevo día</label>
-                      <Calendar
-                        onChange={handleDateChange}
-                        value={date}
-                        className="border-none"
-                      />
+                      <CalendarFull
+                        onChangeDate={handleDateChange}
+                       />
                     </div>
                   </div>
                 </div>

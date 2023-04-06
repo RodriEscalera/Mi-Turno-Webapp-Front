@@ -65,10 +65,11 @@ const MyAccount = () => {
 
     localStorage.removeItem("token");
     navigate("/login");
+    window.location.reload()
   };
 
   return (
-    <section className="h-screen">
+    <section>
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
         <div className="container flex flex-wrap items-center w-full justify-between">
           <h1 className="w-auto font-roboto text-xl font-semibold mt-5 mb-5 text-start ">

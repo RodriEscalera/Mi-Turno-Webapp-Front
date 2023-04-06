@@ -80,10 +80,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
 
   useEffect(() => {
     setAvailableShifts(horariosDefault);
-
     bringSchedule();
-
-    console.log("Se ejecuto!");
   }, [bookingInGeneral.date]);
 
   useEffect(() => {
