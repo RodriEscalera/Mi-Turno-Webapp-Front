@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router";
+import vacio from "../assets/image/void.png";
 
 function Operators() {
   const navigate = useNavigate();
@@ -76,49 +77,56 @@ function Operators() {
           loader=""
         >
           <div className="lg:flex lg:flex-wrap">
-            {operators.length === 0
-              ? null
-              : operators.map((operator: any, i: any) => (
-                  <div className=" p-2 lg:w-full md:w-1/2" key={i}>
-                    <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-                      <div className="w-full grid grid-cols-1 lg:flex lg:flex-wrap lg:justify-between">
-                        <div className="w-1/3">
-                          <h2 className=" text-grey8 font-roboto font-normal text-xs leading-4">
-                            Nombre
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {operator.fullName}
-                          </p>
-                        </div>
-                        <div className="w-1/3">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Mail
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {operator.email}
-                          </p>
-                        </div>
-                        <div className="w-1/3">
-                          <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                            Sucursal
-                          </h2>
-                          <p className="text-sm font-roboto font-semibold leading-4">
-                            {operators[i]?.branch?.name}
-                          </p>
-                        </div>
+            {operators.length === 0 ? (
+              <div className="flex w-full items-center font-roboto text-2xl justify-center">
+                <div className="mt-16">
+                  <img className=" w-60 h-80 object-cover" src={vacio} alt="" />{" "}
+                </div>
+                <p className="text">Aún no hay operadores registrados</p>
+              </div>
+            ) : (
+              operators.map((operator: any, i: any) => (
+                <div className=" p-2 lg:w-full md:w-1/2" key={i}>
+                  <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
+                    <div className="w-full grid grid-cols-1 lg:flex lg:flex-wrap lg:justify-between">
+                      <div className="w-1/3">
+                        <h2 className=" text-grey8 font-roboto font-normal text-xs leading-4">
+                          Nombre
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {operator.fullName}
+                        </p>
                       </div>
-                      <div>
-                        <button
-                          onClick={() => editFunction(operator._id)}
-                          className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                          type="button"
-                        >
-                          Editar
-                        </button>
+                      <div className="w-1/3">
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Mail
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {operator.email}
+                        </p>
+                      </div>
+                      <div className="w-1/3">
+                        <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                          Sucursal
+                        </h2>
+                        <p className="text-sm font-roboto font-semibold leading-4">
+                          {operators[i]?.branch?.name}
+                        </p>
                       </div>
                     </div>
+                    <div>
+                      <button
+                        onClick={() => editFunction(operator._id)}
+                        className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
+                        type="button"
+                      >
+                        Editar
+                      </button>
+                    </div>
                   </div>
-                ))}
+                </div>
+              ))
+            )}
           </div>
         </InfiniteScroll>
       </div>
