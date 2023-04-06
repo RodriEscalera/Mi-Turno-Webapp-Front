@@ -43,7 +43,7 @@ const UpdateOperator = () => {
 
     renderBooking();
   }, []);
-  console.log(operator, "esto viene del estado operator");
+  console.log("esto viene del estado operator", operator);
   /* console.log(operatorUpdated, "esto viene del useSelector"); */
 
   const handleOnChangeBranch = (branch: Branch) => {
@@ -93,8 +93,12 @@ const UpdateOperator = () => {
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
     e.preventDefault();
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
+    let { name, value } = e.target;
+    if(value === "") {
+      value = operator
+    } else {
+      setInputs({ ...inputs, [name]: value });
+    }
   };
 
   return (

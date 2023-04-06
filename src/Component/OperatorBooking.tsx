@@ -46,6 +46,7 @@ function OperatorBooking() {
   };
 
   const asyncFunctionCloseModal = () => {
+    window.location.reload()
     return setShowModal(0);
   };
 
@@ -99,27 +100,30 @@ function OperatorBooking() {
                                   {turno._id.slice(0, 7)}...
                                 </p>
                               </div>
-                              <div>
-                                <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                                  Disponibilidad
-                                </h2>
-                                <p className="text-sm font-roboto font-semibold leading-4">
-                                  {turno.available}
-                                </p>
+                            </div>
+                            {turno.available === false ? (
+                              <div className="flex space-x-1">
+                                <button
+                                  className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
+                                  onClick={() =>
+                                    updateBookingAvailability(
+                                      booking?.bookings[i]?._id
+                                    )
+                                  }
+                                >
+                                  Confirmación
+                                </button>
                               </div>
-                            </div>
-                            <div className="flex space-x-1">
-                              <button
-                                className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                                onClick={() =>
-                                  updateBookingAvailability(
-                                    booking?.bookings[i]?._id
-                                  )
-                                }
-                              >
-                                Confirmación
-                              </button>
-                            </div>
+                            ) : (
+                              <div className="flex space-x-1">
+                                <button
+                                  className="bg-green-200 hover:bg-green-300 text-exito font-semibold font-roboto rounded px-[1.13rem] py-1.5 text-center inline-flex items-center"
+                                disabled
+                                >
+                                  Confirmado
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                       ))}
