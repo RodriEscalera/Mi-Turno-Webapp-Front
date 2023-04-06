@@ -82,17 +82,11 @@ function Login() {
       setShowModal(1);
       setTimeout(resolve, 3000);
     }).then(() => {
-
-      if (user.usertype === "user" || user.usertype === "admin" ) {
-        navigate("/");
-      } else if (user.usertype === "operator") {
-        navigate("/operatorBooking");
-      } 
-
+      navigate("/");
     });
   };
 
-  console.log(email.toLowerCase());
+  console.log(user.usertype);
 
   return (
     <>
