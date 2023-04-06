@@ -8,6 +8,8 @@ export const initialStateBranchData = {
   fullName: null,
   email: null,
   phone: null,
+  startingTime: null,
+  closingTime: null
 };
 
 interface IdataOperator {
