@@ -80,7 +80,7 @@ function Login() {
       setShowModal(1);
       setTimeout(resolve, 3000);
     }).then(() => {
-      navigate("/bookingPanel");
+      navigate("/");
     });
   };
 
