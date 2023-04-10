@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import ConfirmedReservation from "../commons/alerts/ConfirmedReservation";
+import vacio from "../assets/image/void.png";
 
 function OperatorBooking() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function OperatorBooking() {
   };
 
   const asyncFunctionCloseModal = () => {
-    window.location.reload()
+    window.location.reload();
     return setShowModal(0);
   };
 
@@ -62,71 +63,82 @@ function OperatorBooking() {
                 </h1>
 
                 <div className="lg:flex lg:flex-wrap">
-                  {booking?.bookings?.length === 0
-                    ? null
-                    : booking.bookings?.map((turno: any, i: any) => (
-                        <div className=" p-2 lg:w-full md:w-1/2" key={i}>
-                          <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
-                            <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
-                              <div className="w-28">
-                                <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                                  Nombre y Apellido
-                                </h2>
-                                <p className="text-sm font-roboto font-semibold leading-4">
-                                  {turno.fullName}
-                                </p>
-                              </div>
-                              <div>
-                                <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                                  Hora de la reserva
-                                </h2>
-                                <p className="text-sm font-roboto font-semibold leading-4">
-                                  {turno.time}
-                                </p>
-                              </div>
-                              <div>
-                                <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                                  Día de la reserva
-                                </h2>
-                                <p className="text-sm font-roboto font-semibold leading-4">
-                                  {turno.date}
-                                </p>
-                              </div>
-                              <div>
-                                <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
-                                  N° de la reserva
-                                </h2>
-                                <p className="text-sm font-roboto font-semibold leading-4">
-                                  {turno._id.slice(0, 7)}...
-                                </p>
-                              </div>
+                  {booking?.bookings?.length === 0 ? (
+                    <div className="flex w-full items-center font-roboto text-2xl justify-center">
+                      <div className="mt-16">
+                        <img
+                          className=" w-60 h-80 object-cover"
+                          src={vacio}
+                          alt=""
+                        />{" "}
+                      </div>
+                      <p className="text">Aún no hay reservas</p>
+                    </div>
+                  ) : (
+                    booking.bookings?.map((turno: any, i: any) => (
+                      <div className=" p-2 lg:w-full md:w-1/2" key={i}>
+                        <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
+                          <div className=" grid grid-cols-1 lg:gap-32 lg:grid-cols-4">
+                            <div className="w-28">
+                              <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                                Nombre y Apellido
+                              </h2>
+                              <p className="text-sm font-roboto font-semibold leading-4">
+                                {turno.fullName}
+                              </p>
                             </div>
-                            {turno.available === false ? (
-                              <div className="flex space-x-1">
-                                <button
-                                  className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
-                                  onClick={() =>
-                                    updateBookingAvailability(
-                                      booking?.bookings[i]?._id
-                                    )
-                                  }
-                                >
-                                  Confirmación
-                                </button>
-                              </div>
-                            ) : (
-                              <div className="flex space-x-1">
-                                <button
-                                  className="bg-green-200 hover:bg-green-300 text-exito font-semibold font-roboto rounded px-[1.13rem] py-1.5 text-center inline-flex items-center"
-                                disabled
-                                >
-                                  Confirmado
-                                </button>
-                              </div>
-                            )}
+                            <div>
+                              <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                                Hora de la reserva
+                              </h2>
+                              <p className="text-sm font-roboto font-semibold leading-4">
+                                {turno.time}
+                              </p>
+                            </div>
+                            <div>
+                              <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                                Día de la reserva
+                              </h2>
+                              <p className="text-sm font-roboto font-semibold leading-4">
+                                {turno.date}
+                              </p>
+                            </div>
+                            <div>
+                              <h2 className="text-grey8 font-roboto font-normal text-xs leading-4">
+                                N° de la reserva
+                              </h2>
+                              <p className="text-sm font-roboto font-semibold leading-4">
+                                {turno._id.slice(0, 7)}...
+                              </p>
+                            </div>
                           </div>
+                          {turno.available === false ? (
+                            <div className="flex space-x-1">
+                              <button
+                                className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto rounded px-3 py-1.5 text-center inline-flex items-center"
+                                onClick={() =>
+                                  updateBookingAvailability(
+                                    booking?.bookings[i]?._id
+                                  )
+                                }
+                              >
+                                Confirmación
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex space-x-1">
+                              <button
+                                className="bg-green-200 hover:bg-green-300 text-exito font-semibold font-roboto rounded px-[1.13rem] py-1.5 text-center inline-flex items-center"
+                                disabled
+                              >
+                                Confirmado
+                              </button>
+                            </div>
+                          )}
                         </div>
-                      ))}
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </section>

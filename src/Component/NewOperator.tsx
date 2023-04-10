@@ -1,9 +1,11 @@
 import { useInput } from "../Hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import { useState } from "react";
 import DropDown from "../commons/DropDown";
+import ojito from "../assets/icons/openEye.svg";
+import ojitoActivo from "../assets/icons/openEye2.svg";
+import { message } from "antd";
 
 interface FormData {
   name: string;
@@ -19,6 +21,10 @@ interface Branch {
 }
 
 function NewOperator() {
+  const [showPwd, setShowPwd] = useState(false);
+  const [showPwdRepeat, setShowPwdRepeat] = useState(false);
+  const [isMatchPassword, setIsMatchPassword] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
 
   const navigate = useNavigate();
@@ -31,6 +37,13 @@ function NewOperator() {
     password2: "",
     usertype: "",
   });
+
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content: "No coinciden las contraseñas",
+    });
+  };
 
   const { name, dni, email, password, password2 } = formulario;
 
@@ -55,6 +68,23 @@ function NewOperator() {
   };
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
+  };
+
+  const handleShowPwd = () => {
+    setShowPwd(!showPwd);
+  };
+
+  const handleShowPwdRepeat = () => {
+    setShowPwdRepeat(!showPwdRepeat);
+  };
+
+  const validatePassword2 = () => {
+    if (password !== password2) {
+      setIsMatchPassword(false);
+      error();
+    } else {
+      setIsMatchPassword(true);
+    }
   };
 
   return (
@@ -134,22 +164,39 @@ function NewOperator() {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-            <div>
+            <div className="space-y-1">
               <label
                 htmlFor="password"
                 className="block text-sm text-black font-roboto"
               >
                 Contraseña
               </label>
-              <div className="mt-1">
+              <div className="relative w-full">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2">
+                  <input
+                    className="hidden js-password-toggle"
+                    id="toggle"
+                    type="checkbox"
+                  />
+                  <label
+                    className=" px-2 py-1 text-gray- focus:ring-0 font-mono cursor-pointer js-password-label"
+                    htmlFor="toggle"
+                    onClick={handleShowPwd}
+                  >
+                    {showPwd ? (
+                      <img src={ojitoActivo} alt="" />
+                    ) : (
+                      <img src={ojito} alt="" />
+                    )}
+                  </label>
+                </div>
                 <input
-                  value={password}
-                  onChange={handleChange}
                   id="password"
                   name="password"
-                  type="password"
+                  onChange={handleChange}
+                  type={showPwd ? "text" : "password"}
                   required
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                  className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
                 />
               </div>
             </div>
@@ -160,15 +207,35 @@ function NewOperator() {
               >
                 Repetir Contraseña
               </label>
-              <div className="mt-1">
+              <div className="relative w-full">
+                <div className="absolute inset-y-0 right-0 flex items-center px-2">
+                  <input
+                    className="hidden js-password-toggle"
+                    id="toggle"
+                    type="checkbox"
+                  />
+                  <label
+                    className=" px-2 py-1 text-gray-600 font-mono cursor-pointer js-password-label"
+                    htmlFor="toggle"
+                    onClick={handleShowPwdRepeat}
+                  >
+                    {showPwdRepeat ? (
+                      <img src={ojitoActivo} alt="" />
+                    ) : (
+                      <img src={ojito} alt="" />
+                    )}
+                  </label>
+                </div>
                 <input
-                  value={password2}
-                  onChange={handleChange}
                   id="password"
                   name="password2"
-                  type="password"
+                  onChange={handleChange}
+                  type={showPwdRepeat ? "text" : "password"}
                   required
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
+                  className={` border ${
+                    isMatchPassword ? "border-gray-300" : "border-red-500"
+                  } block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 `}
+                  onBlur={validatePassword2}
                 />
               </div>
             </div>

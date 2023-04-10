@@ -28,12 +28,12 @@ const UpdateBranch = () => {
   const branchUpdated = useSelector((state: any) => state.updateBranch);
   const [branchInfo, setBranchInfo] = useState<any>({});
   const [inputs, setInputs] = useState<FormData>({
-    name: "",
-    email: "",
-    phone: 0,
+    name: branchInfo.name,
+    email: branchInfo.email,
+    phone: branchInfo.phone,
     maxCapacity: "",
-    startingTime: "",
-    closingTime: "",
+    startingTime: branchInfo.startingTime,
+    closingTime: branchInfo.closingTime,
   });
   const query = useQuery();
   const branchId = query.get("branchId");
@@ -54,6 +54,14 @@ const UpdateBranch = () => {
         { token: window.localStorage.getItem("token") }
       );
       setBranchInfo(data);
+      setInputs({
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        closingTime: data.closingTime,
+        startingTime: data.startingTime,
+        maxCapacity: data.maxCapacity,
+      });
       for (const key in data) {
         dispatch(setBranchData({ field: key, data: data[key] }));
       }
@@ -72,13 +80,15 @@ const UpdateBranch = () => {
           token: window.localStorage.getItem("token"),
           ...branchUpdated,
           idBranch: branchId,
-          fullName: inputs.name,
+          name: inputs.name,
           email: inputs.email,
           phone: inputs.phone,
           startingTime: inputs.startingTime,
           closingTime: inputs.closingTime,
         }
       );
+      console.log(response.data);
+
       dispatch(setUpdateBranch(response.data));
 
       navigate("/branches");
@@ -95,7 +105,7 @@ const UpdateBranch = () => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
-  console.log(branchInfo);
+  console.log(inputs);
   return (
     <section className="h-screen">
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
@@ -111,7 +121,7 @@ const UpdateBranch = () => {
               Nombre
             </label>
             <input
-              defaultValue={branchInfo.name}
+              defaultValue={inputs.name}
               name="name"
               className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
               type="text"
@@ -127,7 +137,7 @@ const UpdateBranch = () => {
               Correo Electrónico
             </label>
             <input
-              defaultValue={branchInfo.email}
+              defaultValue={inputs.email}
               onChange={handleChange}
               name="email"
               className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
@@ -144,7 +154,7 @@ const UpdateBranch = () => {
                 Teléfono
               </label>
               <input
-                defaultValue={branchInfo.phone}
+                defaultValue={inputs.phone}
                 onChange={handleChange}
                 name="phone"
                 className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
@@ -189,7 +199,7 @@ const UpdateBranch = () => {
                   name="startingTime"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
-                  <option value="-">{branchInfo.startingTime}</option>
+                  <option value="-">{inputs.startingTime}</option>
 
                   <option value="07:00">07:00</option>
                   <option value="08:00">08:00</option>
@@ -214,7 +224,7 @@ const UpdateBranch = () => {
                   name="closingTime"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
-                  <option value="-">{branchInfo.closingTime}</option>
+                  <option value="-">{inputs.closingTime}</option>
 
                   <option value="18:00">18:00</option>
                   <option value="19:00">19:00</option>

@@ -65,11 +65,11 @@ const MyAccount = () => {
 
     localStorage.removeItem("token");
     navigate("/login");
-    window.location.reload()
+    window.location.reload();
   };
 
   return (
-    <section>
+    <section className="h-screen">
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
         <div className="container flex flex-wrap items-center w-full justify-between">
           <h1 className="w-auto font-roboto text-xl font-semibold mt-5 mb-5 text-start ">
@@ -98,7 +98,7 @@ const MyAccount = () => {
                 defaultValue={fullName}
                 onChange={(e) => setfullName(e.target.value)}
                 required
-                className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 "
+                className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 disabled={isDisabled}
               />
             </div>
@@ -119,7 +119,7 @@ const MyAccount = () => {
                 defaultValue={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 "
+                className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 disabled={isDisabled}
               />
             </div>
@@ -140,7 +140,7 @@ const MyAccount = () => {
                   defaultValue={dni}
                   onChange={(e) => setDni(e.target.value)}
                   required
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600"
+                  className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                   disabled={isDisabled}
                 />
               </div>
@@ -160,7 +160,7 @@ const MyAccount = () => {
                   defaultValue={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600"
+                  className=" border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                   disabled={isDisabled}
                 />
               </div>
@@ -176,13 +176,18 @@ const MyAccount = () => {
             </button>
           </div>
           <div>
-            <button
-              type="submit"
-              className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 mb-5 "
-              disabled={isDisabled}
-            >
-              Aceptar
-            </button>
+            {isDisabled ? (
+              <button className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-grey6 transition duration-500 ease-in-out transform bg-grey3 rounded-xl mb-5 ">
+                Aceptar
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 mb-5 "
+              >
+                Aceptar
+              </button>
+            )}
           </div>
         </form>
       </div>

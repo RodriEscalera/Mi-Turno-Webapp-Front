@@ -15,6 +15,7 @@ interface FormData {
   fullName: string;
   dni: number;
   email: string;
+  branch: string;
 }
 interface Branch {
   name: string;
@@ -24,14 +25,15 @@ const UpdateOperator = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const operatorUpdated = useSelector((state: any) => state.updateOp);
+  const [operator, setOperator] = useState<any>({});
   const [inputs, setInputs] = useState<FormData>({
-    fullName: "",
-    dni: 0,
-    email: "",
+    fullName: operator.fullName,
+    dni: operator.dni,
+    email: operator.email,
+    branch: operator.branch,
   });
 
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
-  const [operator, setOperator] = useState<any>({});
   const query = useQuery();
   const operatorId = query.get("operatorId");
 
@@ -43,8 +45,6 @@ const UpdateOperator = () => {
 
     renderBooking();
   }, []);
-  console.log("esto viene del estado operator", operator);
-  /* console.log(operatorUpdated, "esto viene del useSelector"); */
 
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
@@ -57,6 +57,12 @@ const UpdateOperator = () => {
         { token: window.localStorage.getItem("token") }
       );
       setOperator(data);
+      setInputs({
+        fullName: data.fullName,
+        dni: data.dni,
+        email: data.email,
+        branch: data.branch,
+      });
       for (const key in data) {
         dispatch(setOperatorData({ field: key, data: data[key] }));
       }
@@ -94,12 +100,14 @@ const UpdateOperator = () => {
   ) => {
     e.preventDefault();
     let { name, value } = e.target;
-    if(value === "") {
-      value = operator
+    if (value === "") {
+      value = operator;
     } else {
       setInputs({ ...inputs, [name]: value });
     }
   };
+
+  console.log(inputs);
 
   return (
     <section>
@@ -117,7 +125,7 @@ const UpdateOperator = () => {
             </label>
             <div className="mt-1">
               <input
-                defaultValue={operator.fullName}
+                defaultValue={inputs.fullName}
                 id="fullName"
                 name="fullName"
                 type="text"
@@ -137,7 +145,7 @@ const UpdateOperator = () => {
             </label>
             <div className="mt-1">
               <input
-                defaultValue={operator.email}
+                defaultValue={inputs.email}
                 onChange={handleChange}
                 id="email"
                 name="email"
@@ -157,7 +165,7 @@ const UpdateOperator = () => {
               </label>
               <div className="mt-1">
                 <input
-                  defaultValue={operator.dni}
+                  defaultValue={inputs.dni}
                   onChange={handleChange}
                   id="dni"
                   name="dni"
