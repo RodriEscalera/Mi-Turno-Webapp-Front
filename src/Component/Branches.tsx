@@ -62,10 +62,13 @@ function Branches() {
           scrollableTarget="scrollableDiv"
         >
           {branches.length !== 0 ? (
-            branches.map((sucursal: any) =>
+            branches.map((sucursal: any, i: any) =>
               query ? (
                 <>
-                  <div className="border-gray-300 border-solid border-2 h-[5rem] w-[99%] rounded-xl mt-3">
+                  <div
+                    key={i}
+                    className="border-gray-300 border-solid border-2 h-[5rem] w-[99%] rounded-xl mt-3"
+                  >
                     <div className="flex justify-around h-[100%] items-center">
                       <div className="text-start">
                         <p className="text-grey8">Nombre</p>
@@ -92,7 +95,10 @@ function Branches() {
                 </>
               ) : (
                 <>
-                  <div className="flex flex-wrap p-2 lg:w-full md:w-1/2">
+                  <div
+                    key={i}
+                    className="flex flex-wrap p-2 lg:w-full md:w-1/2"
+                  >
                     <div className="justify-between w-full flex items-center border-gray-200 border p-6 rounded-lg">
                       <div className="w-full grid grid-cols-1 lg:flex lg:flex-wrap lg:justify-between">
                         <div className="text-start w-1/5">

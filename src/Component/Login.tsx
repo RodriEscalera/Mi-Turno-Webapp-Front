@@ -80,13 +80,11 @@ function Login() {
   const asyncFunction = () => {
     return new Promise(function (resolve, reject) {
       setShowModal(1);
-      setTimeout(resolve, 3000);
+      setTimeout(resolve, 1500);
     }).then(() => {
       navigate("/");
     });
   };
-
-  console.log(user.usertype);
 
   return (
     <>
@@ -101,7 +99,7 @@ function Login() {
                 htmlFor="email"
                 className="block text-sm text-black font-roboto"
               >
-                Usuario
+                Email
               </label>
               <div className="mt-1">
                 <input

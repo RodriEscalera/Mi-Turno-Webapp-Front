@@ -209,9 +209,7 @@ const UpdateBooking = () => {
                   <div className="lg:w-457 lg:ml-3 p-5 rounded-lg bg-white lg:max-h-[25rem]">
                     <div className="flex flex-col items-center">
                       <label htmlFor="calendar">Selecciona un nuevo día</label>
-                      <CalendarFull
-                        onChangeDate={handleDateChange}
-                       />
+                      <CalendarFull onChangeDate={handleDateChange} />
                     </div>
                   </div>
                 </div>
