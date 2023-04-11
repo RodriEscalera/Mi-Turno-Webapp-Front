@@ -87,7 +87,7 @@ const BookingPanel = () => {
           time: bookingData.time,
           fullName: bookingData.fullName,
           phone: bookingData.phone,
-          email: bookingData.email,
+          email: bookingData.email.toLowerCase(),
           available: bookingData.available,
         }
       );

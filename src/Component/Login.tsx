@@ -55,7 +55,7 @@ function Login() {
     e.preventDefault();
     axios
       .post("http://localhost:3001/api/users/login", {
-        email: email,
+        email: email.toLowerCase(),
         password: password,
       })
       .then((res) => res.data)

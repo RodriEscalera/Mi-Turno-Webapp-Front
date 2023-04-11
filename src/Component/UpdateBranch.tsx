@@ -81,7 +81,7 @@ const UpdateBranch = () => {
           ...branchUpdated,
           idBranch: branchId,
           name: inputs.name,
-          email: inputs.email,
+          email: inputs.email.toLowerCase(),
           phone: inputs.phone,
           startingTime: inputs.startingTime,
           closingTime: inputs.closingTime,

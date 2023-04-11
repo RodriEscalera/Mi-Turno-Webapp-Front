@@ -40,7 +40,7 @@ const MyAccount = () => {
           {
             _id: user.id,
             fullName: fullName,
-            email: email,
+            email: email.toLowerCase(),
             dni: dni,
             phone: phone,
           }
