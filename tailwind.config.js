@@ -1,8 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "node_modules/flowbite-react/*/.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {
+      backgroundImage: {
+        homeImage: "url('https://im.ge/i/Dwe9Ey')",
+      },
       colors: {
         violet: "#A442F1",
         violetHover: "#CC6AFF",
@@ -27,6 +33,7 @@ module.exports = {
       boxShadow: {
         rl: "0 0 24px rgba(0, 0, 0, 0.12)",
         nav: "0px 0px 12px rgba(0, 0, 0, 0.08)",
+        timer: "0px 3px 12px rgba(0, 0, 0, 0.2)",
       },
       width: {
         679: "679px",
@@ -42,5 +49,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };

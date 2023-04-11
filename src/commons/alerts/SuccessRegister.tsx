@@ -1,4 +1,4 @@
-const ModalCheck = () => {
+const SuccessRegister = () => {
   return (
     <div
       className="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover"
@@ -24,11 +24,8 @@ const ModalCheck = () => {
               />
             </svg>
             <h2 className="text-lg font-semibold pt-4 pb-1 font-roboto ">
-              Turno reservado con éxito
+              Registrado correctamente
             </h2>
-            <p className="text-sm font-normal font-roboto px-8">
-              Gracias por confiar en nuestro servicio
-            </p>
           </div>
 
           <div className="p-3 text-center space-x-4 md:block">
@@ -42,4 +39,4 @@ const ModalCheck = () => {
   );
 };
 
-export default ModalCheck;
+export default SuccessRegister;

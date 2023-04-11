@@ -3,21 +3,29 @@ import miCuenta from "../assets/icons/miCuenta.svg";
 import reportes from "../assets/icons/reports.svg";
 import operador from "../assets/icons/operator.svg";
 import sucursal from "../assets/icons/branch.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const user = useSelector((state: any) => state.user);
-  console.log(user.userType);
+
   return (
     <nav className="shadow-nav lg:py-4 lg:px-24 border-gray-200 rounded white:bg-gray-800 white:border-gray-700 sm: py-3 px-5 bg-white">
       {user.usertype !== "admin" ? (
         <div className="container flex flex-wrap items-center justify-between mx-auto">
-          <Link to={!user.id ? "/login" : "/bookingPanel"}>
-            <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded">
-              Reservar
-            </button>
-          </Link>
+          {user.usertype !== "operator" ? (
+            <Link to={!user.id ? "/login" : "/bookingPanel"}>
+              <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded">
+                Reservar
+              </button>
+            </Link>
+          ) : (
+            <Link to={!user.id ? "/login" : "/bookingPanel"}>
+              <button className="hidden bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 rounded">
+                Reservar
+              </button>
+            </Link>
+          )}
 
           <button
             data-collapse-toggle="navbar-solid-bg"
@@ -46,32 +54,64 @@ export const Navbar = () => {
             id="navbar-solid-bg"
           >
             <ul className="flex flex-col mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent">
-              <li className="bg-white sm:py-2">
-                <Link
-                  to="/myBookings"
-                  className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
-                >
-                  Mis Reservas
-                  <img
-                    className="pl-1 hover:text-cruceHover"
-                    src={misReservas}
-                    alt=""
-                  />
-                </Link>
-              </li>
-              <li className="bg-white sm:py-2">
-                <Link
-                  to="/myAccount"
-                  className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
-                >
-                  Mi Cuenta
-                  <img
-                    className="pl-1 hover:text-cruceHover"
-                    src={miCuenta}
-                    alt=""
-                  />
-                </Link>
-              </li>
+              {user.id ? (
+                <>
+                  <li className="bg-white sm:py-2">
+                    {user.usertype === "operator" ? (
+                      <Link
+                        to="/operatorBooking"
+                        className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                      >
+                        Reservas
+                        <img
+                          className="pl-1 hover:text-cruceHover"
+                          src={misReservas}
+                          alt=""
+                        />
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/myBookings"
+                        className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                      >
+                        Mis Reservas
+                        <img
+                          className="pl-1 hover:text-cruceHover"
+                          src={misReservas}
+                          alt=""
+                        />
+                      </Link>
+                    )}
+                  </li>
+                  <li className="bg-white sm:py-2">
+                    <Link
+                      to={!user.id ? "/login" : "/myAccount"}
+                      className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                    >
+                      Mi Cuenta
+                      <img
+                        className="pl-1 hover:text-cruceHover"
+                        src={miCuenta}
+                        alt=""
+                      />
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li className="bg-white sm:py-2">
+                  <Link
+                    to="/login"
+                    className="flex items-center text-black rounded font-semibold font-roboto md:hover:bg-transparent md:border-0 md:hover:text-violet md:p-0"
+                  >
+                    Iniciar sesión
+                    <img
+                      className="pl-1 hover:text-cruceHover"
+                      src={miCuenta}
+                      alt=""
+                    />
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -83,10 +123,11 @@ export const Navbar = () => {
                 Crear sucursal
               </button>
             </Link>
-
-            <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 ml-3 rounded sm: ml-1.5">
-              Sucursal
-            </button>
+            <Link to={"/newOperator"}>
+              <button className="bg-violetSecondary hover:bg-violetSecondaryHover text-violet font-semibold font-roboto py-2 px-4 ml-3 rounded sm: ml-1.5">
+                Crear operador
+              </button>
+            </Link>
           </div>
 
           <button

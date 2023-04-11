@@ -1,65 +1,132 @@
-import React, { useEffect, useState } from "react";
+import useQuery from "../Hooks/useQuery";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import {
+  setBranchData,
+  setUpdateBranch,
+  setBringBranchData,
+  initialStateBranchData,
+} from "../store/updateBranch";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 type FormEvent = React.FormEvent<HTMLFormElement>;
 type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
 
-function CreateBranch(): JSX.Element {
-  const [inputs, setInputs] = useState({
-    nombre: "",
-    email: "",
-    telefono: "",
-    capacidadMaxima: "",
-    horarioDeInicio: "",
-    horarioDeCierre: "",
-  });
+interface FormData {
+  name: string;
+  phone: number;
+  email: string;
+  maxCapacity: string;
+  startingTime: string;
+  closingTime: string;
+}
 
-  const handleInputs = (e: any) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  };
-
+const UpdateBranch = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const branchUpdated = useSelector((state: any) => state.updateBranch);
+  const [branchInfo, setBranchInfo] = useState<any>({});
+  const [inputs, setInputs] = useState<FormData>({
+    name: branchInfo.name,
+    email: branchInfo.email,
+    phone: branchInfo.phone,
+    maxCapacity: "",
+    startingTime: branchInfo.startingTime,
+    closingTime: branchInfo.closingTime,
+  });
+  const query = useQuery();
+  const branchId = query.get("branchId");
 
-  const handleSubmit = async (e: ButtonEvent | FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    const renderBooking = async () => {
+      dispatch(setBringBranchData(initialStateBranchData));
+      await getBranch();
+    };
+
+    renderBooking();
+  }, []);
+
+  const getBranch = async () => {
     try {
-      await axios.post(
-        "http://localhost:3001/api/branches/createbranch",
-
-        {
-          name: inputs.nombre,
-          phone: inputs.telefono,
-          email: inputs.email,
-          closingTime: inputs.horarioDeCierre,
-          startingTime: inputs.horarioDeInicio,
-        }
+      const { data } = await axios.post<any>(
+        `http://localhost:3001/api/branches/onebranch/${branchId}`,
+        { token: window.localStorage.getItem("token") }
       );
-      navigate("/branches");
-    } catch (err) {
-      console.log(err);
+      setBranchInfo(data);
+      setInputs({
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        closingTime: data.closingTime,
+        startingTime: data.startingTime,
+        maxCapacity: data.maxCapacity,
+      });
+      for (const key in data) {
+        dispatch(setBranchData({ field: key, data: data[key] }));
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
+  console.log(inputs);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/branches/updateBranch/${branchId}`,
+        {
+          token: window.localStorage.getItem("token"),
+          ...branchUpdated,
+          idBranch: branchId,
+          name: inputs.name,
+          email: inputs.email.toLowerCase(),
+          phone: inputs.phone,
+          startingTime: inputs.startingTime,
+          closingTime: inputs.closingTime,
+        }
+      );
+      console.log(response.data);
+
+      dispatch(setUpdateBranch(response.data));
+
+      navigate("/branches");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleChange = async (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+  console.log(inputs);
   return (
     <section className="h-screen">
       <div className="shadow-rl flex flex-col justify-center items-center w-full max-w-4xl p-8 mx-auto my-10 rounded-lg text-lg bg-white">
         <form onSubmit={handleSubmit} className="space-y-6 w-full">
           <h1 className="w-full font-roboto text-xl font-semibold mt-5 mb-5 text-start">
-            Crear nueva sucursal
+            Editar sucursal
           </h1>
           <div className="flex-col flex mt-4">
             <label
-              htmlFor="nombre"
+              htmlFor="name"
               className="block text-sm text-black font-roboto"
             >
               Nombre
             </label>
             <input
-              name="nombre"
+              defaultValue={inputs.name}
+              name="name"
               className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
               type="text"
-              id="nombre"
-              onChange={handleInputs}
+              id="name"
+              onChange={handleChange}
             />
           </div>
           <div className="flex-col flex mt-4">
@@ -70,7 +137,8 @@ function CreateBranch(): JSX.Element {
               Correo Electrónico
             </label>
             <input
-              onChange={handleInputs}
+              defaultValue={inputs.email}
+              onChange={handleChange}
               name="email"
               className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
               type="text"
@@ -80,30 +148,31 @@ function CreateBranch(): JSX.Element {
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             <div className="">
               <label
-                htmlFor="telefono"
+                htmlFor="phone"
                 className="block text-sm text-black font-roboto"
               >
                 Teléfono
               </label>
               <input
-                onChange={handleInputs}
-                name="telefono"
+                defaultValue={inputs.phone}
+                onChange={handleChange}
+                name="phone"
                 className=" mt-1 border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 type="text"
-                id="telefono"
+                id="phone"
               />
             </div>
             <div className="">
               <label
-                htmlFor="capacidad-maxima"
+                htmlFor="maxCapacity"
                 className="block text-sm text-black font-roboto"
               >
                 Capacidad Máxima
               </label>
               <div className="mt-1 space-y-1">
                 <select
-                  onChange={handleInputs}
-                  name="capacidadMaxima"
+                  onChange={handleChange}
+                  name="maxCapacity"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
                   <option value="12">12</option>
@@ -118,18 +187,19 @@ function CreateBranch(): JSX.Element {
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
             <div>
               <label
-                htmlFor="horario-inicio"
+                htmlFor="startingTime"
                 className="block text-sm text-black font-roboto"
               >
                 Horario de Inicio
               </label>
               <div className="mt-1">
                 <select
-                  onChange={handleInputs}
-                  name="horarioDeInicio"
+                  onChange={handleChange}
+                  id="startingTime"
+                  name="startingTime"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
-                  <option value="-">-</option>
+                  <option value="-">{inputs.startingTime}</option>
 
                   <option value="07:00">07:00</option>
                   <option value="08:00">08:00</option>
@@ -141,7 +211,7 @@ function CreateBranch(): JSX.Element {
 
             <div className="space-y-1">
               <label
-                htmlFor="horario-cierre"
+                htmlFor="closingTime"
                 className="block text-sm text-black font-roboto"
               >
                 Horario de Cierre
@@ -149,11 +219,12 @@ function CreateBranch(): JSX.Element {
 
               <div className="mt-1">
                 <select
-                  onChange={handleInputs}
-                  name="horarioDeCierre"
+                  onChange={handleChange}
+                  id="closingTime"
+                  name="closingTime"
                   className="border border-gray-300 block w-full px-5 py-3 text-base text-neutral-600 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0"
                 >
-                  <option value="-">-</option>
+                  <option value="-">{inputs.closingTime}</option>
 
                   <option value="18:00">18:00</option>
                   <option value="19:00">19:00</option>
@@ -164,7 +235,6 @@ function CreateBranch(): JSX.Element {
             </div>
           </div>
           <button
-            onClick={handleSubmit}
             type="submit"
             className="flex items-center justify-center w-full px-10 py-4 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 mb-5 "
           >
@@ -174,6 +244,6 @@ function CreateBranch(): JSX.Element {
       </div>
     </section>
   );
-}
+};
 
-export default CreateBranch;
+export default UpdateBranch;

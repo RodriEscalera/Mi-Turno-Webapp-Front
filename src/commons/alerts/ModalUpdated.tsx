@@ -1,3 +1,5 @@
+import { Link, useNavigate } from "react-router-dom";
+
 const ModalUpdated = () => {
   return (
     <div
@@ -32,9 +34,11 @@ const ModalUpdated = () => {
           </div>
 
           <div className="p-3 text-center space-x-4 md:block">
-            <button className="flex items-center justify-center w-full px-6 py-3 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:ring-0 mb-5 ">
-              Continuar
-            </button>
+            <Link to="/myBookings">
+              <button className="flex items-center justify-center w-full px-6 py-3 text-base font-roboto text-center text-white transition duration-500 ease-in-out transform bg-purple-600 rounded-xl hover:bg-purple-500 focus:ring-0 mb-5 ">
+                Continuar
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ interface DropDownProps {
   onSelectedBranch: (branch: any) => void;
 }
 
-type ClickEvent = React.MouseEvent<HTMLSelectElement>;
+type ChangeEvent = React.ChangeEvent<HTMLSelectElement>;
 
 const Dropdown = (props: DropDownProps) => {
   const [array, setArray] = useState([]);
@@ -27,25 +27,25 @@ const Dropdown = (props: DropDownProps) => {
       });
   }, []);
 
-  const handleSelect = (e: ClickEvent) => {
+  const handleSelect = (e: ChangeEvent) => {
     const target = e.target as HTMLSelectElement;
     setSelectedBranch(target.value);
     props.onSelectedBranch(target.value);
-   //dispatch(setBookingData({field:"branch", data:target.value}))
+    //dispatch(setBookingData({field:"branch", data:target.value}))
   };
 
   return (
-    <div className="relative w-full">
+    <div className="w-full">
       <select
-      required
-        className="w-full p-2.5 text-gray-500 bg-white border rounded-lg shadow-sm focus:border-indigo-600"
-        onClick={handleSelect}
+        required
+        className="w-full h-[3.07rem] p-2.5 text-gray-500 bg-white border border-gray-300 rounded-lg hover:border-gray-400 focus:border-purple-600 focus:ring-0 "
+        onChange={handleSelect}
       >
-        <option selected>Elegir sucursal</option>
+        <option selected></option>
         {array.length === 0
           ? null
           : array?.map((option: any, i) => (
-              <option key={i} value={option.name}>
+              <option key={i} value={option._id}>
                 {option.name}
               </option>
             ))}

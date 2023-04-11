@@ -1,10 +1,14 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-export const setBookingData = createAction<boolean, string>("SET_BOOKING_DATA");
+export const setBookingData = createAction<IdataBooking>("SET_BOOKING_DATA");
+export const setUpdateBookingData = createAction<IdataBooking>("UPDATE_BOOKING_DATA");
+export const setBringBookingData = createAction<any>("BRING_BOOKING_DATA");
 
-const initialState = {
+export const initialStateBookingData = {
+  
   branch: null,
-  schedule: null,
+  date: null,
+  time: null,
   fullName: null,
   phone: null,
   email: null,
@@ -16,13 +20,25 @@ interface IdataBooking {
   data: any;
 }
 
-const reducer = createReducer(initialState, {
+
+const reducer = createReducer(initialStateBookingData, {
   [setBookingData.type]: (state, action) => {
+    const { field, data } = action.payload;
+    
     return {
-      ...initialState,
-      [action.payload.field]: action.payload.data,
+      ...state,
+      [field]: data,
     };
   },
+  [setUpdateBookingData.type]: (state, action) => {
+    return {
+      ...state,
+      ...action.payload,
+    };
+  },
+  [setBringBookingData.type]: (state, action) => {
+    return action.payload
+  }
 });
 
 export default reducer;
