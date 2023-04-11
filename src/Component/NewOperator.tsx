@@ -56,7 +56,7 @@ function NewOperator() {
           fullName: name,
           branch: selectedBranch,
           dni: dni,
-          email: email,
+          email: email.toLowerCase(),
           password: password,
           password2: password2,
         })

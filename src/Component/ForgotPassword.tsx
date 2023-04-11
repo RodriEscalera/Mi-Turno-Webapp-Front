@@ -18,7 +18,7 @@ function ForgotPassword() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3001/api/users/askForChangePassword", {
-        email: input,
+        email: input.toLowerCase(),
       });
       asyncFunction();
     } catch (err) {

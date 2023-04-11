@@ -84,7 +84,7 @@ const UpdateBooking = () => {
           date: selectedDate,
           time: userForm.time,
           fullName: userForm.fullName,
-          email: userForm.email,
+          email: userForm.email.toLowerCase(),
           phone: userForm.phone,
         }
       );

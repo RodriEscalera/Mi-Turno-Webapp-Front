@@ -100,7 +100,7 @@ const Register = () => {
       .post("http://localhost:3001/api/users/register", {
         fullName: name,
         dni: dni,
-        email: email,
+        email: email.toLowerCase(),
         password: password,
         usertype: "user",
       })

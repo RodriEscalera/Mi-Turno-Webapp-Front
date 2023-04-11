@@ -81,7 +81,7 @@ const UpdateOperator = () => {
           ...operatorUpdated,
           user: operatorId,
           branch: selectedBranch,
-          fullName: inputs.fullName,
+          fullName: inputs.fullName.toLowerCase(),
           email: inputs.email,
           dni: inputs.dni,
         }
