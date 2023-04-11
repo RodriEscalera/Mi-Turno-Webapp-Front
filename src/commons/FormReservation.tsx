@@ -145,6 +145,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
           />
         </div>
       </div>
+
       <div className="mt-5">
         <label
           htmlFor="email"
@@ -160,6 +161,7 @@ const FormReservation = ({ onReservationForm }: FormProps) => {
           onChange={handleChange}
           required
         />
+
       </div>
     </div>
   );

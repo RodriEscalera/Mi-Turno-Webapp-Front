@@ -24,6 +24,7 @@ const BookingPanel = () => {
   const [showModal, setShowModal] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+
   const [selectedDate, setSelectedDate] = useState<any | null>("");
   const [selectedForm, setSelectedForm] = useState<FormData>({
     fullName: "",
@@ -50,6 +51,7 @@ const BookingPanel = () => {
     dispatch(setBookingData({ field: "email", data: selectedForm.email }));
     dispatch(setBookingData({ field: "available", data: null }));
   }, [selectedBranch, selectedDate, selectedForm, dispatch]);
+
 
   const handleOnChangeBranch = (branch: Branch) => {
     setSelectedBranch(branch);
@@ -92,18 +94,22 @@ const BookingPanel = () => {
         }
       );
 
+
       dispatch(setBookingData({ field: "available", data: data }));
       setShowModal(1);
     } catch (error) {
       setShowModal(2);
       console.error(error);
     }
+
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
+
         <section className="bg-grey1 h-[180vh] w-full px-5 md:h-screen lg:px-10">
+
           <div className="w-full flex justify-start">
             <h1 className="w-full font-roboto text-xl text-start font-semibold mt-9 mb-5 lg:ml-40 ">
               Hacer una reserva
